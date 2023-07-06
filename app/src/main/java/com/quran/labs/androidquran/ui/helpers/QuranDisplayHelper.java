@@ -82,7 +82,17 @@ public class QuranDisplayHelper {
       sb.append(context.getString(R.string.quran_hizb)).append(' ')
           .append(QuranUtils.getLocalizedNumber(context, hizb));
     }
-
+//Me{: Make each Joz' 4 hizbs instead of two 4-part hizbs
+    sb = new StringBuilder();
+    if (rub3 % 2 == 1) return lastPopupTime; hizb=rub3/2+1;
+    if (rub3 % 8 == 0) {
+      sb.append(context.getString(R.string.quran_juz2)).append(' ')
+          .append(QuranUtils.getLocalizedNumber(context,
+              (hizb / 4) + 1));
+    }else{ sb.append(context.getString(R.string.quran_hizb)).append(' ')
+        .append(QuranUtils.getLocalizedNumber(context, hizb));
+    }
+//Me}
     String result = sb.toString();
     ToastCompat.makeText(context, result, Toast.LENGTH_SHORT).show();
     return System.currentTimeMillis();
@@ -94,6 +104,13 @@ public class QuranDisplayHelper {
     if (rub3 == -1) {
       return "";
     }
+    if (rub3 % 2 == 1) return ""; else return new StringBuilder()
+        .append(context.getString(R.string.comma_with_spaces))
+        .append(context.getString(R.string.quran_hizb))
+        .append(' ')
+        .append(QuranUtils.getLocalizedNumber(context, rub3 / 2 +
+            1)).toString();
+  /*Me Changed this with the preceding statement
     int hizb = (rub3 / 4) + 1;
     StringBuilder sb = new StringBuilder();
     sb.append(context.getString(R.string.comma_with_spaces));
@@ -109,6 +126,7 @@ public class QuranDisplayHelper {
             .append(QuranUtils.getLocalizedNumber(context, hizb));
 
     return sb.toString();
+  */
   }
 
   public static PaintDrawable getPaintDrawable(int startX, int endX) {

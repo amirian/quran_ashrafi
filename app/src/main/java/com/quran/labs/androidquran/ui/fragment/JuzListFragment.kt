@@ -54,9 +54,9 @@ class JuzListFragment : Fragment() {
   lateinit var juzListPresenter: JuzListPresenter
 
   override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
+      inflater: LayoutInflater,
+      container: ViewGroup?,
+      savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.quran_list, container, false)
 
@@ -102,19 +102,19 @@ class JuzListFragment : Fragment() {
     val activity = requireActivity()
     if (activity is QuranActivity) {
       disposable = activity.latestPageObservable
-        .first(Constants.NO_PAGE)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeWith(object : DisposableSingleObserver<Int>() {
-          override fun onSuccess(recentPage: Int) {
-            if (recentPage != Constants.NO_PAGE) {
-              val juz = quranInfo.getJuzFromPage(recentPage)
-              val position = (juz - 1) * 9
-              recyclerView?.scrollToPosition(position)
+          .first(Constants.NO_PAGE)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribeWith(object : DisposableSingleObserver<Int>() {
+            override fun onSuccess(recentPage: Int) {
+              if (recentPage != Constants.NO_PAGE) {
+                val juz = quranInfo.getJuzFromPage(recentPage)
+                val position = (juz - 1) * 9
+                recyclerView?.scrollToPosition(position)
+              }
             }
-          }
 
-          override fun onError(e: Throwable) {}
-        })
+            override fun onError(e: Throwable) {}
+          })
     }
 
     val settings = QuranSettings.getInstance(activity)
@@ -149,7 +149,7 @@ class JuzListFragment : Fragment() {
   private fun updateJuz2List(quarters: Array<String>) {
     val activity: Activity = activity ?: return
 
-    val elements = arrayOfNulls<QuranRow>(Constants.JUZ2_COUNT * (8 + 1))
+    val elements = arrayOfNulls<QuranRow>(Constants.JUZ2_COUNT * (4 + 1))//Me "8"->"4"
     var ctr = 0
     for (i in 0 until 8 * Constants.JUZ2_COUNT) {
       val pos = quranInfo.getQuarterByIndex(i)
@@ -157,38 +157,40 @@ class JuzListFragment : Fragment() {
       if (i % 8 == 0) {
         val juz = 1 + i / 8
         val juzTitle = activity.getString(
-          R.string.juz2_description,
-          QuranUtils.getLocalizedNumber(activity, juz)
+            R.string.juz2_description,
+            QuranUtils.getLocalizedNumber(activity, juz)
         )
         val builder = Builder()
-          .withType(QuranRow.HEADER)
-          .withText(juzTitle)
-          .withPage(quranInfo.getStartingPageForJuz(juz))
+            .withType(QuranRow.HEADER)
+            .withText(juzTitle)
+            .withPage(quranInfo.getStartingPageForJuz(juz))
         elements[ctr++] = builder.build()
       }
-      val metadata = getString(
-        R.string.sura_ayah_notification_str,
-        quranDisplayData.getSuraName(activity, pos.sura, false), pos.ayah
-      )
-      val juzTextWithEllipsis = quarters[i] + "..."
-      val builder = Builder()
-        .withText(juzTextWithEllipsis)
-        .withMetadata(metadata)
-        .withPage(page)
-        .withJuzType(ENTRY_TYPES[i % 4])
-      if (i % 4 == 0) {
-        val overlayText = QuranUtils.getLocalizedNumber(activity, 1 + i / 4)
-        builder.withJuzOverlayText(overlayText)
-      }
-      elements[ctr++] = builder.build()
+      if (i % 2 == 0) { //Me{ added this if
+        val metadata = getString(
+            R.string.sura_ayah_notification_str,
+            quranDisplayData.getSuraName(activity, pos.sura, false), pos.ayah
+        )
+        val juzTextWithEllipsis = quarters[i] + "..."
+        val builder = Builder()
+            .withText(juzTextWithEllipsis)
+            .withMetadata(metadata)
+            .withPage(page)
+            .withJuzType(ENTRY_TYPES[(1 + i / 2) % 4])//Me "i"->"(1 + i / 2)"
+        if (true) { //Me "i % 4 == 0"->"true"
+          val overlayText = QuranUtils.getLocalizedNumber(activity, 1 + i / 2) //Me "4"->"2"
+          builder.withJuzOverlayText(overlayText)
+        }
+        elements[ctr++] = builder.build()
+      }//Me}
     }
     adapter?.setElements(elements.filterNotNull().toTypedArray())
   }
 
   companion object {
     private val ENTRY_TYPES = intArrayOf(
-      JuzView.TYPE_JUZ, JuzView.TYPE_QUARTER,
-      JuzView.TYPE_HALF, JuzView.TYPE_THREE_QUARTERS
+        JuzView.TYPE_JUZ, JuzView.TYPE_QUARTER,
+        JuzView.TYPE_HALF, JuzView.TYPE_THREE_QUARTERS
     )
 
     fun newInstance(): JuzListFragment {
