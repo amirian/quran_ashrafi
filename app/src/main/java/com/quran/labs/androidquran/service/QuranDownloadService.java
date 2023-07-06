@@ -327,8 +327,8 @@ public class QuranDownloadService extends Service implements
   }
 
   private boolean download(String urlString, String destination,
-      String outputFile,
-      NotificationDetails details) {
+                           String outputFile,
+                           NotificationDetails details) {
     // make the directory if it doesn't exist
     new File(destination).mkdirs();
     Timber.d("making directory %s", destination);
@@ -350,7 +350,7 @@ public class QuranDownloadService extends Service implements
                                 SuraAyah startVerse,
                                 SuraAyah endVerse,
                                 boolean isGapless,
-      NotificationDetails details) {
+                                NotificationDetails details) {
     details.setIsGapless(isGapless);
     new File(destination).mkdirs();
 
@@ -467,7 +467,7 @@ public class QuranDownloadService extends Service implements
   }
 
   private boolean downloadFileWrapper(String urlString, String destination,
-      String outputFile, NotificationDetails details) {
+                                      String outputFile, NotificationDetails details) {
     boolean previouslyCorrupted = false;
 
     int res = DOWNLOAD_SUCCESS;
@@ -526,7 +526,7 @@ public class QuranDownloadService extends Service implements
   }
 
   private int startDownload(String url, String path,
-      String filename, NotificationDetails notificationInfo) {
+                            String filename, NotificationDetails notificationInfo) {
     if (!QuranUtils.haveInternet(this)) {
       notifyError(QuranDownloadNotifier.ERROR_NETWORK, false, filename, notificationInfo);
       return QuranDownloadNotifier.ERROR_NETWORK;
@@ -549,7 +549,11 @@ public class QuranDownloadService extends Service implements
   }
 
   private int downloadUrl(String url, String path, String filename,
-      NotificationDetails notificationInfo) {
+                          NotificationDetails notificationInfo) {
+    //Me: a temporary repo for Ashrafi pages
+    if (url.equals("https://android.quran.com/data/zips/images_1260.zip") ||
+        url.equals("https://quran.app/data/zips/images_1260.zip"))
+      url = "https://github.com/amirian/quran_ashrafi/raw/Ashrafi/ashrafi-images/images_1260.zip";
     Timber.d("downloading %s", url);
     final Request.Builder builder = new Request.Builder()
         .url(url).tag(DEFAULT_TAG);
