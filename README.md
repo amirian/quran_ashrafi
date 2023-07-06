@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/quran/quran_android/master/app/src/madani/res/drawable-xxhdpi/icon.png" alt='Quran for Android logo'/>
 
-# Quran for Android
+# Quran for Android (Ashrafi Extension)
 
 [![Build Status](https://github.com/quran/quran_android/actions/workflows/build.yml/badge.svg)](https://github.com/quran/quran_android/actions/workflows/build.yml)
 [![Version](https://img.shields.io/github/v/release/quran/quran_android?include_prereleases&sort=semver)](https://github.com/quran/quran_android/releases/latest)
@@ -11,16 +11,17 @@
 This is a simple (Madani based) Quran app for Android.
 
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-      alt='Get it on Google Play'
-      height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)
+alt='Get it on Google Play'
+height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
-      alt='Get it on GitHub'
-      height="80">](https://github.com/quran/quran_android/releases/latest)
-
+alt='Get it on GitHub'
+height="80">](https://github.com/quran/quran_android/releases/latest)
+</div>
 <div align="left">
 
 ## Credits
 
+* Ashrafi Tabrizi calligraphy scanned and [svg-made](https://github.com/amirian/quran_ashrafi/raw/Ashrafi/ashrafi-images/images_1260.zip) by [Mohammad Mahdi Amirian](http://ce.aut.ac.ir/~amirian) on github.
 * madani images from [quran images project](https://github.com/quran/quran.com-images) on github.
 * qaloon images used with permission of Nous Memes Editions Et Diffusion (Tunisia).
 * naskh images used with permission of SHL Info Systems.
@@ -72,3 +73,5 @@ Please keep use of this code for non-profit purposes only. Also, please note tha
 * [Timber](https://github.com/JakeWharton/timber)
 * [dnsjava](http://dnsjava.org)
 * [NumberPicker](https://github.com/ShawnLin013/NumberPicker)
+
+</div>

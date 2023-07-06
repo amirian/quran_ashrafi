@@ -1,3 +1,11 @@
+Quran Ashrafi Extension Contributor
+===================================
+
+### Code
+
+* [Mohammad Mahdi Amirian](http://ce.aut.ac.ir/~amirian) - the main extention to Quran Android
+
+
 Quran Android Contributors
 ==========================
 
@@ -5,9 +13,9 @@ Quran Android Contributors
 
 * [Ahmed El-Helw](https://twitter.com/ahmedre)
 * [Asim Mohiuddin](https://github.com/asimmohiuddin) - images, gapless audio
-    and work on the Naskh version
+  and work on the Naskh version
 * [g360230](https://github.com/g360230) - images and work on the Qaloon
-    version
+  version
 * [Shuhrat Dehkanov](http://github.com/ozbek)
 * [Ahmed Farra](http://github.com/afarra)
 * [Hussein Maher](http://twitter.com/husseinmaher)

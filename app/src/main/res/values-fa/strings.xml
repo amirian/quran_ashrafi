@@ -143,7 +143,7 @@
   <string name="process_progress">در حال پردازش %1$d / %2$d</string>
   <string name="download_retry">تلاش دوباره</string>
   <string name="download_cancel">لغو</string>
-  
+
   <!-- translation database stuff -->
   <string name="remove_dlg_title">حذف ترجمه</string>
   <string name="remove_dlg_msg">آیا مطمئن‌اید که می‌خواهید %1$s را حذف کنید؟</string>
@@ -178,13 +178,13 @@
   <!-- bookmark & tag list -->
   <string name="bookmarks_list_empty">نشانکی وجود ندارد</string>
   <string name="about_data_sources">منبع داده‌ها</string>
-  <string name="about_description">این برنامه مجانی است. تهیه‌کنندگانش را از دعای خود محروم نسازید.</string>
+  <string name="about_description">این برنامه رایگان و هدیه ای است به مناسبت بزرگترین عید خدا غدیر خم</string>//Me
   <string name="about_images">تصاویر</string>
-  <string name="about_madani_images">تصاویر صفحه‌های این قرآن متعلق به چاپخانه ملک فهد در مدینه منوره می‌باشد.</string>
-  
+  <string name="about_madani_images">تصاویر صفحه‌های این قرآن به خط مصطغی اشرفی تبریزی چاپ شده در ایران می‌باشد.</string>//Me
+
   <string name="about_quranicaudio_summary">تلاوت‌های قرآنی (بی‌وقفه)</string>
   <string name="about_quran_ksu">پروژه مصحف الکترونیکی</string>
-  <string name="about_quran_ksu_summary">پروژه مصحف الکترونیکی در دانشگاه ملک سعود منبع تفاسیر عربی و برخی ترجمه‌هاست.</string>
+  <string name="about_quran_ksu_summary">این پروژه افزونه ای است بر مصحف الکترونیکی با تقسیم هر جزء به چهار حزب به کوشش محمد مهدی امیریان</string>//Me
   <string name="about_tanzil_summary">بسیاری از ترجمه‌ها</string>
   <string name="about_noorhidayat_summary">قلم نور حرا و ترجمه مفتی تقی</string>
   <string name="about_open_source">پروژه‌های متن‌باز</string>
@@ -269,13 +269,13 @@
     <item>سه بار</item>
     <item>بی‌پایان</item>
   </string-array>
-    <string name="about_quran_enc" translatable="false">دایرة المعارف قرآن کریم</string>
-    <string name="downloadTabletPrompt">ما به تازگی اضافه شده تصاویر بهبود یافته برای قرص. آیا می خواهید این تصاویر را اکنون دانلود کنید؟</string>
+  <string name="about_quran_enc" translatable="false">دایرة المعارف قرآن کریم</string>
+  <string name="downloadTabletPrompt">ما به تازگی اضافه شده تصاویر بهبود یافته برای قرص. آیا می خواهید این تصاویر را اکنون دانلود کنید؟</string>
   <string name="menu_show_date">تاریخ نمایش</string>
   <string name="please_wait">لطفاً منتظر بمانید...</string>
   <string name="about_naskh_images">تصاویر قرآنی برای برنامه ناسخ (با اجازه) از SHL Info Systems گرفته می شود</string>
   <string name="about_qaloon_images">تصاویر قلون با اجازه Nous-Mêmes Éditions Et Diffusion (تونس) استفاده می شود</string>
-  <string name="about_furqan_summary">متن عثمانی و تفسیر عربی</string>
+  <string name="about_furqan_summary">با خط اشرفی تبریزی و تفسیر عربی</string>//Me Uthmani->Tabrizi
   <string name="about_quran_enc_summary">ترجمه برای بسیاری از زبان ها</string>
   <string name="search_full_results">نتایج کامل</string>
   <string name="search_entire_mushaf">به کل قرآن نگاه کن.</string>

@@ -41,10 +41,10 @@
   <string name="please_wait">Please wait…</string>
 
   <!-- about -->
-  <string name="about_description">Quran for Android is a free Quran application. Please do not forget the contributors in your prayers.</string>
+  <string name="about_description">This Quran App is free as a gift for you on the occasion of the god\'s greatest holiday: Ghadir e Khom 1444</string>//Me
   <string name="about_data_sources">Data Sources</string>
   <string name="about_images">Images</string>
-  <string name="about_madani_images">The Quran images are based on the fonts from the King Fahd Quran Printing Complex</string>
+  <string name="about_madani_images">The Quran images are based on the Mostafa Ashrafi Tabrizi calligraphy, printed in IRAN</string>//Me
   <string name="about_madani_images_url" translatable="false">https://github.com/quran/quran.com-images</string>
   <string name="about_naskh_images">The Quran images for the Naskh app are taken (with permission) from SHL Info Systems</string>
   <string name="about_naskh_images_url" translatable="false">http://www.shlinfosystems.com</string>
@@ -53,10 +53,10 @@
   <string name="about_quranicaudio_summary">Gapless mp3 Quran recitations</string>
   <string name="about_quranicaudio_url" translatable="false">https://quranicaudio.com</string>
   <string name="about_quran_ksu">Electronic Moshaf Project</string>
-  <string name="about_quran_ksu_summary">The King Saud University Electronic Moshaf Project is the app\'s source of Arabic Tafaseer and translations for various languages. It is also the source for Dr. Ayman Suwaid\'s recitation.</string>
+  <string name="about_quran_ksu_summary">This is an extension to the Electronic Moshaf Project, splitting each Juz\' into four Hizbs, developed by Mohammad Mahdi Amirian</string>//Me
   <string name="about_quran_ksu_url" translatable="false">https://quran.ksu.edu.sa</string>
   <string name="about_furqan" translatable="false">Al-Bāḥith al-Qur’ānī (tafsir.app)</string>
-  <string name="about_furqan_summary">Uthmani text and Arabic Tafaseer</string>
+  <string name="about_furqan_summary">Ashrafi Tabrizi Calligraphy and Arabic Tafaseer</string>//Me Uthmani->Tabrizi
   <string name="about_furqan_url" translatable="false">https://tafsir.app</string>
   <string name="about_quran_enc" translatable="false">Noble Quran Encyclopedia (QuranEnc)</string>
   <string name="about_quran_enc_summary">Translations for many languages</string>
