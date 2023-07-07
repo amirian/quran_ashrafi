@@ -1,21 +1,21 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/quran/quran_android/master/app/src/madani/res/drawable-xxhdpi/icon.png" alt='Quran for Android logo'/>
+<img src="https://raw.githubusercontent.com/quran/quran_android/master/app/src/madani/res/drawable-xxhdpi/icon.png" alt='Quran Ashrafi for Android logo'/>
 
 # Quran for Android (Ashrafi Extension)
 
-[![Build Status](https://github.com/quran/quran_android/actions/workflows/build.yml/badge.svg)](https://github.com/quran/quran_android/actions/workflows/build.yml)
-[![Version](https://img.shields.io/github/v/release/quran/quran_android?include_prereleases&sort=semver)](https://github.com/quran/quran_android/releases/latest)
-[![Github Downloads](https://img.shields.io/github/downloads/quran/quran_android/total?logo=Github)](https://github.com/quran/quran_android/releases)
+[![Build Status](https://github.com/quran/quran_android/actions/workflows/build.yml/badge.svg)](https://github.com/amirian/quran_ashrafi/actions/workflows/build.yml)
+[![Version](https://img.shields.io/github/v/release/quran/quran_android?include_prereleases&sort=semver)](https://github.com/amirian/quran_ashrafi/releases/latest)
+[![Github Downloads](https://img.shields.io/github/downloads/quran/quran_android/total?logo=Github)](https://github.com/amirian/quran_ashrafi/releases)
 
 This is a simple (Madani based) Quran app for Android.
 
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+<![<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
-height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)
+height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)>
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
 alt='Get it on GitHub'
-height="80">](https://github.com/quran/quran_android/releases/latest)
+height="80">](https://github.com/amirian/quran_ashrafi/releases/latest)
 </div>
 <div align="left">
 
