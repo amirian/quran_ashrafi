@@ -4,28 +4,28 @@
 
 # Quran for Android (Ashrafi Extension)
 
-[![Build Status](https://github.com/quran/quran_android/actions/workflows/build.yml/badge.svg)](https://github.com/quran/quran_android/actions/workflows/build.yml)
-[![Version](https://img.shields.io/github/v/release/quran/quran_android?include_prereleases&sort=semver)](https://github.com/quran/quran_android/releases/latest)
-[![Github Downloads](https://img.shields.io/github/downloads/quran/quran_android/total?logo=Github)](https://github.com/quran/quran_android/releases)
+[![Build Status](https://github.com/quran/quran_android/actions/workflows/build.yml/badge.svg)](https://github.com/amirian/quran_ashrafi/actions/workflows/build.yml)
+[![Version](https://img.shields.io/github/v/release/quran/quran_android?include_prereleases&sort=semver)](https://github.com/amirian/quran_ashrafi/releases/latest)
+[![Github Downloads](https://img.shields.io/github/downloads/quran/quran_android/total?logo=Github)](https://github.com/amirian/quran_ashrafi/releases)
 
-This is a simple (Madani based) Quran app for Android.
+This Quran App is free as a gift for you on the occasion of the god\'s greatest holiday: Ghadir e Khom 1444.
 
-[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+<!---[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
 alt='Get it on Google Play'
-height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)
+height="80">](https://play.google.com/store/apps/details?id=com.quran.labs.androidquran)--->
 [<img src="https://user-images.githubusercontent.com/69304392/148696068-0cfea65d-b18f-4685-82b5-329a330b1c0d.png"
 alt='Get it on GitHub'
-height="80">](https://github.com/quran/quran_android/releases/latest)
+height="80">](https://github.com/amirian/quran_ashrafi/releases/latest)
 </div>
 <div align="left">
 
 ## Credits
 
+* Quran images are based on the Mostafa Ashrafi Tabrizi calligraphy, printed in IRAN.
 * Ashrafi Tabrizi calligraphy scanned and [svg-made](https://github.com/amirian/quran_ashrafi/raw/Ashrafi/ashrafi-images/images_1260.zip) by [Mohammad Mahdi Amirian](http://ce.aut.ac.ir/~amirian) on github.
-* madani images from [quran images project](https://github.com/quran/quran.com-images) on github.
 * qaloon images used with permission of Nous Memes Editions Et Diffusion (Tunisia).
 * naskh images used with permission of SHL Info Systems.
-* translation, tafsir and Arabic data come from [quranenc](https://quranenc.com) and [King Saud University](https://quran.ksu.edu.sa). a small number of translations also come from [tanzil](http://tanzil.net).
+* translation, tafsir and Arabic data come from [quranenc](https://quranenc.com). Number of translations come from [tanzil](http://tanzil.net).
 
 ## Contributing
 
