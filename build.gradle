@@ -1,9 +1,9 @@
 buildscript {
   ext {
-    kotlinVersion = '1.8.22'
+    kotlinVersion = '1.9.0'
     coroutinesVersion = '1.7.2'
 
-    daggerVersion = '2.46.1'
+    daggerVersion = '2.47'
 
     androidxMediaVersion = '1.6.0'
     androidxAnnotationVersion = '1.6.0'
@@ -20,7 +20,7 @@ buildscript {
 
     anvilVersion = '2.4.6'
     moshiVersion = '1.15.0'
-    okioVersion = '3.3.0'
+    okioVersion = '3.4.0'
     retrofitVersion = '2.9.0'
     sqldelightVersion = '2.0.0-rc02'
 
@@ -55,7 +55,7 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:8.0.2'
-    classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.6"
+    classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.7"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     classpath "net.ltgt.gradle:gradle-errorprone-plugin:3.1.0"
     classpath "com.google.gms:google-services:4.3.15"
