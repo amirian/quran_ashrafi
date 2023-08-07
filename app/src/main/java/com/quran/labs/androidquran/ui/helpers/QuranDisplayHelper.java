@@ -113,7 +113,8 @@ public class QuranDisplayHelper {
   /*Me Changed this with the preceding statement
     int hizb = (rub3 / 4) + 1;
     StringBuilder sb = new StringBuilder();
-    sb.append(context.getString(R.string.comma_with_spaces));
+    sb.append(context.getString(R.string.comma));
+    sb.append(' ');
     int remainder = rub3 % 4;
     if (remainder == 1) {
       sb.append(context.getString(R.string.quran_rob3)).append(' ');
