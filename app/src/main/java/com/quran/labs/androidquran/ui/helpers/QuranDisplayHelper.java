@@ -105,7 +105,8 @@ public class QuranDisplayHelper {
       return "";
     }
     if (rub3 % 2 == 1) return ""; else return new StringBuilder()
-        .append(context.getString(R.string.comma_with_spaces))
+        .append(context.getString(R.string.comma))
+        .append(' ')
         .append(context.getString(R.string.quran_hizb))
         .append(' ')
         .append(QuranUtils.getLocalizedNumber(context, rub3 / 2 +
