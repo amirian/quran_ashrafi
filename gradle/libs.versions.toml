@@ -1,30 +1,30 @@
 [versions]
-agp = "8.1.1"
+agp = "8.1.2"
 kotlin = "1.9.10"
 
 anvil = "2.4.8"
 coroutinesVersion = "1.7.3"
 crashlytics = "2.9.9"
-daggerVersion = "2.48"
+daggerVersion = "2.48.1"
 dnsjavaVersion = "2.1.9"
 errorprone = "3.1.0"
 errorproneCoreVersion = "2.22.0"
 googleServices = "4.4.0"
 leakcanaryAndroidVersion = "2.12"
 moshiVersion = "1.15.0"
-okioVersion = "3.5.0"
+okioVersion = "3.6.0"
 retrofitVersion = "2.9.0"
 rxandroidVersion = "3.0.2"
-rxjavaVersion = "3.1.7"
+rxjavaVersion = "3.1.8"
 sqldelight = "2.0.0"
 timberVersion = "5.0.1"
 
 # androidx library versions
 androidxAppcompatVersion = "1.6.1"
-androidxActivityComposeVersion = "1.7.2"
+androidxActivityComposeVersion = "1.8.0"
 androidxAnnotationVersion = "1.7.0"
 androidxCoreVersion = "1.12.0"
-androidxNavigationVersion = "2.7.3"
+androidxNavigationVersion = "2.7.4"
 androidxDynamicAnimationVersion = "1.0.0"
 androidxFragmentVersion = "1.6.1"
 androidxJunitExtVersion = "1.1.5"
@@ -43,23 +43,23 @@ firebaseCrashlyticsVersion = "18.4.3"
 
 # ui libraries
 accompanistVersion = "0.32.0"
-balloonVersion = "1.6.0"
+balloonVersion = "1.6.1"
 tooltipComposeVersion = "0.2.0"
 insetterVersion = "0.6.1"
-materialComponentsVersion = "1.9.0"
+materialComponentsVersion = "1.10.0"
 numberPickerVersion = "2.4.13"
 reorderableComposeVersion = "0.9.6"
 
 # recitations
 grpcOkhttpVersion = "1.58.0"
-googleAuthVersion = "1.19.0"
-googleCloudSpeechVersion = "4.19.0"
+googleAuthVersion = "1.20.0"
+googleCloudSpeechVersion = "4.22.0"
 
 # testing
 junitVersion = "4.13.2"
 espressoVersion = "3.5.1"
 truthVersion = "1.1.5"
-mockitoVersion = "5.5.0"
+mockitoVersion = "5.6.0"
 robolectricVersion = "4.10.3"
 
 [libraries]
