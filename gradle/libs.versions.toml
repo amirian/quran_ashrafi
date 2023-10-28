@@ -46,7 +46,7 @@ androidxWorkManagerVersion = "2.8.1"
 
 # firebase
 firebaseAnalyticsVersion = "21.4.0"
-firebaseCrashlyticsVersion = "18.5.0"
+firebaseCrashlyticsVersion = "18.5.1"
 
 # ui libraries
 accompanistVersion = "0.32.0"
@@ -60,7 +60,7 @@ reorderableComposeVersion = "0.9.6"
 # recitations
 grpcOkhttpVersion = "1.59.0"
 googleAuthVersion = "1.20.0"
-googleCloudSpeechVersion = "4.23.0"
+googleCloudSpeechVersion = "4.24.0"
 
 # testing
 junitVersion = "4.13.2"
