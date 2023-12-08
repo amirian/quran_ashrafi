@@ -1,10 +1,10 @@
 [versions]
-agp = "8.1.4"
-kotlin = "1.9.20"
-ksp = "1.9.20-1.0.14"
+agp = "8.2.0"
+kotlin = "1.9.21"
+ksp = "1.9.21-1.0.15"
 
 # required within the Gradle convention plugins - not unused
-compose-compiler = "1.5.4"
+compose-compiler = "1.5.5-dev-k1.9.21-163bb051fe5"
 composeBomVersion = "2023.10.01"
 okhttpBomVersion = "4.12.0"
 
@@ -12,7 +12,7 @@ okhttpBomVersion = "4.12.0"
 anvil = "2.4.8"
 coroutinesVersion = "1.7.3"
 crashlytics = "2.9.9"
-daggerVersion = "2.48.1"
+daggerVersion = "2.49"
 dnsjavaVersion = "2.1.9"
 errorprone = "3.1.0"
 errorproneCoreVersion = "2.23.0"
@@ -23,7 +23,7 @@ okioVersion = "3.6.0"
 retrofitVersion = "2.9.0"
 rxandroidVersion = "3.0.2"
 rxjavaVersion = "3.1.8"
-sqldelight = "2.0.0"
+sqldelight = "2.0.1"
 timberVersion = "5.0.1"
 
 # androidx library versions
@@ -58,15 +58,15 @@ numberPickerVersion = "2.4.13"
 reorderableComposeVersion = "0.9.6"
 
 # recitations
-grpcOkhttpVersion = "1.59.1"
+grpcOkhttpVersion = "1.60.0"
 googleAuthVersion = "1.20.0"
-googleCloudSpeechVersion = "4.25.0"
+googleCloudSpeechVersion = "4.26.0"
 
 # testing
 junitVersion = "4.13.2"
 espressoVersion = "3.5.1"
 truthVersion = "1.1.5"
-mockitoVersion = "5.7.0"
+mockitoVersion = "5.8.0"
 robolectricVersion = "4.11.1"
 
 [libraries]
