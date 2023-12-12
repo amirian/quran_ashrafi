@@ -1,28 +1,34 @@
 package com.quran.labs.androidquran.ui.fragment
 
-import com.quran.labs.androidquran.presenter.translation.InlineTranslationPresenter
-import android.widget.ProgressBar
-import com.quran.labs.androidquran.view.InlineTranslationView
-import com.quran.labs.androidquran.view.QuranSpinner
-import com.quran.labs.androidquran.ui.util.TranslationsSpinnerAdapter
-import javax.inject.Inject
-import com.quran.data.core.QuranInfo
-import com.quran.labs.androidquran.util.QuranSettings
-import com.quran.labs.androidquran.ui.PagerActivity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.os.Bundle
-import com.quran.labs.androidquran.R
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import com.quran.labs.androidquran.common.LocalTranslation
+import android.widget.ProgressBar
+import com.quran.data.core.QuranInfo
 import com.quran.data.model.VerseRange
+import com.quran.labs.androidquran.R
 import com.quran.labs.androidquran.common.QuranAyahInfo
+import com.quran.labs.androidquran.presenter.translation.InlineTranslationPresenter
 import com.quran.labs.androidquran.presenter.translation.InlineTranslationPresenter.TranslationScreen
+import com.quran.labs.androidquran.presenter.translationlist.TranslationListPresenter
+import com.quran.labs.androidquran.ui.PagerActivity
 import com.quran.labs.androidquran.ui.helpers.SlidingPagerAdapter
+import com.quran.labs.androidquran.ui.util.TranslationsSpinnerAdapter
+import com.quran.labs.androidquran.util.QuranSettings
+import com.quran.labs.androidquran.view.InlineTranslationView
+import com.quran.labs.androidquran.view.QuranSpinner
 import com.quran.mobile.di.AyahActionFragmentProvider
+import com.quran.mobile.translation.model.LocalTranslation
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.abs
 
 class AyahTranslationFragment : AyahActionFragment(), TranslationScreen {
@@ -43,6 +49,8 @@ class AyahTranslationFragment : AyahActionFragment(), TranslationScreen {
   @Inject
   lateinit var translationPresenter: InlineTranslationPresenter
 
+  private val scope = MainScope()
+
   object Provider : AyahActionFragmentProvider {
     override val order = SlidingPagerAdapter.TRANSLATION_PAGE
     override val iconResId = com.quran.labs.androidquran.common.toolbar.R.drawable.ic_translation
@@ -52,6 +60,11 @@ class AyahTranslationFragment : AyahActionFragment(), TranslationScreen {
   override fun onAttach(context: Context) {
     super.onAttach(context)
     (activity as? PagerActivity)?.pagerActivityComponent?.inject(this)
+  }
+
+  override fun onDetach() {
+    scope.cancel()
+    super.onDetach()
   }
 
   override fun onCreateView(
@@ -99,33 +112,20 @@ class AyahTranslationFragment : AyahActionFragment(), TranslationScreen {
     }
   }
 
-  public override fun refreshView() {
-    val start = start
-    val end = end
-    if (start == null || end == null) {
-      return
-    }
-    val activity: Activity? = activity
-    if (activity is PagerActivity) {
-      val translations = activity.translations
-      if (translations == null || translations.size == 0) {
-        progressBar.visibility = View.GONE
-        emptyState.visibility = View.VISIBLE
-        translationControls.visibility = View.GONE
-        return
-      }
-
-      var activeTranslationsFilesNames = activity.activeTranslationsFilesNames
-      if (activeTranslationsFilesNames == null) {
-        activeTranslationsFilesNames = quranSettings.activeTranslations
-      }
+  override fun onTranslationsUpdated(translations: List<LocalTranslation>) {
+    if (translations.isEmpty()) {
+      progressBar.visibility = View.GONE
+      emptyState.visibility = View.VISIBLE
+      translationControls.visibility = View.GONE
+    } else {
+      val activeTranslationsFilesNames = quranSettings.activeTranslations
 
       val adapter = translationAdapter
       if (adapter == null) {
         translationAdapter = TranslationsSpinnerAdapter(
           activity,
           R.layout.translation_ab_spinner_item,
-          activity.translationNames,
+          translations.map { it.resolveTranslatorName() }.toTypedArray(),
           translations,
           activeTranslationsFilesNames
         ) { selectedItems: Set<String?>? ->
@@ -135,20 +135,31 @@ class AyahTranslationFragment : AyahActionFragment(), TranslationScreen {
         translator.adapter = translationAdapter
       } else {
         adapter.updateItems(
-          activity.translationNames,
+          translations.map { it.resolveTranslatorName() }.toTypedArray(),
           translations,
           activeTranslationsFilesNames
         )
+        refreshView()
       }
-      if (start == end) {
-        translationControls.visibility = View.VISIBLE
-      } else {
-        translationControls.visibility = View.GONE
-      }
-      val verses = 1 + abs(
-        quranInfo.getAyahId(start.sura, start.ayah) - quranInfo.getAyahId(end.sura, end.ayah)
-      )
-      val verseRange = VerseRange(start.sura, start.ayah, end.sura, end.ayah, verses)
+    }
+  }
+
+  public override fun refreshView() {
+    val start = start
+    val end = end
+    if (start == null || end == null) {
+      return
+    }
+    if (start == end) {
+      translationControls.visibility = View.VISIBLE
+    } else {
+      translationControls.visibility = View.GONE
+    }
+    val verses = 1 + abs(
+      quranInfo.getAyahId(start.sura, start.ayah) - quranInfo.getAyahId(end.sura, end.ayah)
+    )
+    val verseRange = VerseRange(start.sura, start.ayah, end.sura, end.ayah, verses)
+    scope.launch {
       translationPresenter.refresh(verseRange)
     }
   }

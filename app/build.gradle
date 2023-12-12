@@ -122,6 +122,7 @@ dependencies {
   implementation project(path: ':common:recitation')
   implementation project(path: ':common:search')
   implementation project(path: ':common:toolbar')
+  implementation project(path: ':common:translation')
   implementation project(path: ':common:upgrade')
   implementation project(path: ':common:ui:core')
 
@@ -175,6 +176,8 @@ dependencies {
   testImplementation libs.robolectric
   testImplementation libs.espresso.core
   testImplementation libs.espresso.intents
+  testImplementation libs.turbine
+  testImplementation libs.kotlinx.coroutines.test
 
   errorprone libs.errorprone.core
 
