@@ -29,7 +29,7 @@ jobs:
         run: ./gradlew assembleMadaniDebug
 
       - name: Download Previous Debug APK
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: post_merge.yml
@@ -44,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Apk Diff Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success()
         with:
           name: apk_differences
@@ -71,7 +71,7 @@ jobs:
         run: ./gradlew lintMadaniDebug
 
       - name: Upload lint results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: lint_report
@@ -101,7 +101,7 @@ jobs:
         run: ./gradlew test -PdisableCrashlytics -PdisableFirebase
 
       - name: Upload test report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: unit_test_report
@@ -128,7 +128,7 @@ jobs:
         run: ./gradlew :app:dependencies --configuration madaniReleaseRuntimeClasspath > current_dependencies.txt
 
       - name: Download Previous Dependencies List
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: post_merge.yml
@@ -143,7 +143,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Dependency Diff Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success()
         with:
           name: dependency_differences
@@ -154,7 +154,7 @@ jobs:
           echo ${{ github.event.number }} > pr.txt
 
       - name: Upload PR Number
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pr
           path: pr.txt

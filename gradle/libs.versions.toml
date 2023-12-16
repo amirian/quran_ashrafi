@@ -1,7 +1,7 @@
 [versions]
 agp = "8.2.0"
 kotlin = "1.9.21"
-ksp = "1.9.21-1.0.15"
+ksp = "1.9.21-1.0.16"
 
 # required within the Gradle convention plugins - not unused
 compose-compiler = "1.5.6"
@@ -28,10 +28,10 @@ timberVersion = "5.0.1"
 
 # androidx library versions
 androidxAppcompatVersion = "1.6.1"
-androidxActivityComposeVersion = "1.8.1"
-androidxAnnotationVersion = "1.7.0"
+androidxActivityComposeVersion = "1.8.2"
+androidxAnnotationVersion = "1.7.1"
 androidxCoreVersion = "1.12.0"
-androidxNavigationVersion = "2.7.5"
+androidxNavigationVersion = "2.7.6"
 androidxDynamicAnimationVersion = "1.0.0"
 androidxFragmentVersion = "1.6.2"
 androidxJunitExtVersion = "1.1.5"
@@ -53,14 +53,14 @@ accompanistVersion = "0.32.0"
 balloonVersion = "1.6.3"
 tooltipComposeVersion = "0.2.0"
 insetterVersion = "0.6.1"
-materialComponentsVersion = "1.10.0"
+materialComponentsVersion = "1.11.0"
 numberPickerVersion = "2.4.13"
 reorderableComposeVersion = "0.9.6"
 
 # recitations
 grpcOkhttpVersion = "1.60.0"
 googleAuthVersion = "1.20.0"
-googleCloudSpeechVersion = "4.26.0"
+googleCloudSpeechVersion = "4.27.0"
 
 # testing
 junitVersion = "4.13.2"
