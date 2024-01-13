@@ -575,7 +575,12 @@ class AudioService : Service(), OnCompletionListener, OnPreparedListener,
         val timeDelta = gaplessSuraData[updatedAyah + 1] - localPlayer.currentPosition
         val t = clamp(timeDelta, 100, 10000)
         val tAccountingForSpeed = t / (audioRequest?.playbackSpeed ?: 1f)
-        Timber.d("updateAudioPlayPosition after: %d, speed %f", t, tAccountingForSpeed)
+        Timber.d(
+          "updateAudioPlayPosition before: %d, after %f, speed: %f",
+          t,
+          tAccountingForSpeed,
+          audioRequest?.playbackSpeed
+        )
         serviceHandler.sendEmptyMessageDelayed(MSG_UPDATE_AUDIO_POS, tAccountingForSpeed.toLong())
       } else if (maxAyahs == updatedAyah) {
         serviceHandler.sendEmptyMessageDelayed(MSG_UPDATE_AUDIO_POS, 150)
@@ -682,9 +687,15 @@ class AudioService : Service(), OnCompletionListener, OnPreparedListener,
 
   private fun processUpdatePlaybackSpeed(speed: Float) {
     if (State.Playing === state && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      player?.playbackParams?.let { params ->
-        params.setSpeed(speed)
-        player?.playbackParams = params
+      try {
+        player?.playbackParams?.let { params ->
+          params.setSpeed(speed)
+          player?.playbackParams = params
+        }
+      } catch (e: Exception) {
+        // catch an Android 6 crash [IllegalStateException], and report the speed since some
+        // non-Android 6 devices also crash here, but with [IllegalArgumentException]
+        Timber.e(e, "Failed to set speed to $speed")
       }
     }
   }
@@ -1389,7 +1400,6 @@ class AudioService : Service(), OnCompletionListener, OnPreparedListener,
 
     // so user can pass in a serializable LegacyAudioRequest to the intent
     const val EXTRA_PLAY_INFO = "com.quran.labs.androidquran.PLAY_INFO"
-    const val EXTRA_PLAY_SPEED = "com.quran.labs.androidquran.PLAY_SPEED"
     private const val NOTIFICATION_CHANNEL_ID = Constants.AUDIO_CHANNEL
     private const val MSG_INCOMING = 1
     private const val MSG_START_AUDIO = 2
