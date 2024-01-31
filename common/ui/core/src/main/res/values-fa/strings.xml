@@ -4,4 +4,6 @@
   <string name="cancel">لغو</string>
   <string name="from">از</string>
   <string name="to">تا</string>
+  <string name="loading">بارگذاری…</string>
+  <string name="canceling">در حال لغو</string>
 </resources>
