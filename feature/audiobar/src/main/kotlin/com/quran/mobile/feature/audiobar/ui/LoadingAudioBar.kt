@@ -20,19 +20,49 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.quran.labs.androidquran.common.ui.core.QuranIcons
 import com.quran.labs.androidquran.common.ui.core.QuranTheme
-import com.quran.mobile.feature.audiobar.state.AudioBarScreen
+import com.quran.mobile.feature.audiobar.state.AudioBarState
+import com.quran.mobile.feature.audiobar.state.AudioBarUiEvent
 
 @Composable
 internal fun LoadingAudioBar(
-  state: AudioBarScreen.AudioBarState.Loading,
+  state: AudioBarState.Loading,
+  eventSink: (AudioBarUiEvent.CancelablePlaybackEvent) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val sink = state.eventSink
+  ProgressAudioBar(
+    progress = state.progress,
+    messageResource = state.messageResource,
+    onClick = { eventSink(AudioBarUiEvent.CancelablePlaybackEvent.Cancel) },
+    modifier = modifier
+  )
+}
+
+@Composable
+internal fun DownloadingAudioBar(
+  state: AudioBarState.Downloading,
+  eventSink: (AudioBarUiEvent.DownloadingPlaybackEvent) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  ProgressAudioBar(
+    progress = state.progress,
+    messageResource = state.messageResource,
+    onClick = { eventSink(AudioBarUiEvent.DownloadingPlaybackEvent.Cancel) },
+    modifier = modifier
+  )
+}
+
+@Composable
+internal fun ProgressAudioBar(
+  progress: Int,
+  messageResource: Int,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
   Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier = modifier.height(IntrinsicSize.Min)
   ) {
-    IconButton(onClick = { sink(AudioBarScreen.AudioBarUiEvent.LoadingPlaybackEvent.Cancel) }) {
+    IconButton(onClick = { onClick() }) {
       Icon(QuranIcons.Close, contentDescription = stringResource(id = android.R.string.cancel))
     }
 
@@ -43,13 +73,13 @@ internal fun LoadingAudioBar(
     )
 
     Column {
-      if (state.progress == -1) {
+      if (progress == -1) {
         LinearProgressIndicator()
       } else {
-        LinearProgressIndicator(progress = state.progress.toFloat() / 100f)
+        LinearProgressIndicator(progress = progress.toFloat() / 100f)
       }
 
-      Text(text = stringResource(id = state.messageResource))
+      Text(text = stringResource(id = messageResource))
     }
   }
 }
@@ -59,11 +89,11 @@ internal fun LoadingAudioBar(
 fun LoadingAudioBarPreview() {
   QuranTheme {
     LoadingAudioBar(
-      state = AudioBarScreen.AudioBarState.Loading(
+      state = AudioBarState.Loading(
         progress = 50,
-        messageResource = com.quran.mobile.common.download.R.string.downloading,
-        eventSink = {}
-      )
+        messageResource = com.quran.mobile.common.download.R.string.downloading
+      ),
+      eventSink = {}
     )
   }
 }
@@ -73,11 +103,11 @@ fun LoadingAudioBarPreview() {
 fun LoadingAudioBarIndeterminatePreview() {
   QuranTheme {
     LoadingAudioBar(
-      state = AudioBarScreen.AudioBarState.Loading(
+      state = AudioBarState.Loading(
         progress = -1,
-        messageResource = com.quran.mobile.common.ui.core.R.string.loading,
-        eventSink = {}
-      )
+        messageResource = com.quran.mobile.common.ui.core.R.string.loading
+      ),
+      eventSink = {}
     )
   }
 }
