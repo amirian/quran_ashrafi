@@ -1,4 +1,4 @@
-package com.quran.labs.androidquran.bridge
+package com.quran.labs.androidquran.feature.reading.bridge
 
 import com.quran.data.model.SuraAyah
 import com.quran.data.model.selection.AyahSelection
@@ -10,7 +10,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class ReadingEventPresenterBridge constructor(
+class ReadingEventPresenterBridge(
   private val readingEventPresenter: ReadingEventPresenter,
   private val handleClick: (() -> Unit),
   private val handleSelection: ((AyahSelection) -> Unit)
