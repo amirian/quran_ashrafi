@@ -133,6 +133,15 @@ public class QuranSettings {
     return val;
   }
 
+  public int getAyahTextSize() {
+    return prefs.getInt(Constants.PREF_AYAH_TEXT_SIZE,
+        Constants.DEFAULT_TEXT_SIZE);
+  }
+
+  public void setAyahTextSize(int size) {
+    prefs.edit().putInt(Constants.PREF_AYAH_TEXT_SIZE, size).apply();
+  }
+
   public int getTranslationTextSize() {
     return prefs.getInt(Constants.PREF_TRANSLATION_TEXT_SIZE,
         Constants.DEFAULT_TEXT_SIZE);
