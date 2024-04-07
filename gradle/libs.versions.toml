@@ -5,7 +5,7 @@ ksp = "1.9.23-1.0.20"
 
 # required within the Gradle convention plugins - not unused
 compose-compiler = "1.5.11"
-composeBomVersion = "2024.03.00"
+composeBomVersion = "2024.04.00"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
@@ -23,7 +23,7 @@ okioVersion = "3.9.0"
 retrofitVersion = "2.11.0"
 rxandroidVersion = "3.0.2"
 rxjavaVersion = "3.1.8"
-sqldelight = "2.0.1"
+sqldelight = "2.0.2"
 timberVersion = "5.0.1"
 
 # androidx library versions
@@ -59,16 +59,16 @@ reorderableComposeVersion = "0.9.6"
 molecule = "1.4.2"
 
 # recitations
-grpcOkhttpVersion = "1.62.2"
+grpcOkhttpVersion = "1.63.0"
 googleAuthVersion = "1.23.0"
-googleCloudSpeechVersion = "4.34.0"
+googleCloudSpeechVersion = "4.36.0"
 
 # testing
 junitVersion = "4.13.2"
 espressoVersion = "3.5.1"
 truthVersion = "1.4.2"
 mockitoVersion = "5.11.0"
-robolectricVersion = "4.12"
+robolectricVersion = "4.12.1"
 turbineVersion = "1.1.0"
 
 [libraries]
