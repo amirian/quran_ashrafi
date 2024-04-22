@@ -5,7 +5,7 @@ ksp = "1.9.23-1.0.20"
 
 # required within the Gradle convention plugins - not unused
 compose-compiler = "1.5.12"
-composeBomVersion = "2024.04.00"
+composeBomVersion = "2024.04.01"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
@@ -17,7 +17,7 @@ dnsjavaVersion = "2.1.9"
 errorprone = "3.1.0"
 errorproneCoreVersion = "2.26.1"
 googleServices = "4.4.1"
-leakcanaryAndroidVersion = "2.13"
+leakcanaryAndroidVersion = "2.14"
 moshiVersion = "1.15.1"
 okioVersion = "3.9.0"
 retrofitVersion = "2.11.0"
@@ -43,6 +43,7 @@ androidxSwipeRefreshVersion = "1.1.0"
 androidxPagingVersion = "3.2.1"
 androidxPagingComposeVersion = "3.2.1"
 androidxWorkManagerVersion = "2.9.0"
+androidxWindowManager = "1.2.0"
 
 # firebase
 firebaseAnalyticsVersion = "21.6.2"
@@ -96,7 +97,7 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androidxPagingVersion" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingComposeVersion" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationVersion" }
-
+androidx-window = { module = "androidx.window:window", version.ref = "androidxWindowManager" }
 # compose
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
