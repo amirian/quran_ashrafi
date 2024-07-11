@@ -14,16 +14,21 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.os.StatFs;
 
-import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.quran.data.core.QuranInfo;
 import com.quran.data.model.SuraAyah;
 import com.quran.labs.androidquran.QuranApplication;
 import com.quran.labs.androidquran.extension.CloseableExtensionKt;
+import com.quran.labs.androidquran.service.download.BatchDownloadStrategy;
+import com.quran.labs.androidquran.service.download.DownloadStrategy;
+import com.quran.labs.androidquran.service.download.GaplessDownloadStrategy;
+import com.quran.labs.androidquran.service.download.GappedDownloadStrategy;
+import com.quran.labs.androidquran.service.download.SingleFileDownloadStrategy;
 import com.quran.labs.androidquran.service.util.QuranDownloadNotifier;
 import com.quran.labs.androidquran.service.util.QuranDownloadNotifier.NotificationDetails;
 import com.quran.labs.androidquran.service.util.QuranDownloadNotifier.ProgressIntent;
+import com.quran.labs.androidquran.service.util.QuranDownloadNotifierImpl;
 import com.quran.labs.androidquran.util.QuranSettings;
 import com.quran.labs.androidquran.util.QuranUtils;
 import com.quran.labs.androidquran.util.UrlUtil;
@@ -33,7 +38,6 @@ import com.quran.mobile.common.download.DownloadInfoStreams;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,6 +81,7 @@ public class QuranDownloadService extends Service implements
   public static final String EXTRA_START_VERSE = "startVerse";
   public static final String EXTRA_END_VERSE = "endVerse";
   public static final String EXTRA_DOWNLOAD_DATABASE = "downloadDatabase";
+  public static final String EXTRA_AUDIO_BATCH = "batchAudio";
   public static final String EXTRA_IS_GAPLESS = "isGapless";
 
   // download types (also handler message types)
@@ -162,7 +167,7 @@ public class QuranDownloadService extends Service implements
 
     ((QuranApplication) getApplication()).getApplicationComponent().inject(this);
     broadcastManager = LocalBroadcastManager.getInstance(appContext);
-    notifier = new QuranDownloadNotifier(this, this, downloadInfoStreams);
+    notifier = new QuranDownloadNotifierImpl(this, this, downloadInfoStreams);
   }
 
   private void handleOnStartCommand(Intent intent, int startId) {
@@ -172,8 +177,7 @@ public class QuranDownloadService extends Service implements
         isDownloadCanceled = true;
         sendNoOpMessage(startId);
       } else if (ACTION_RECONNECT.equals(intent.getAction())) {
-        int type = intent.getIntExtra(EXTRA_DOWNLOAD_TYPE,
-            DOWNLOAD_TYPE_UNDEF);
+        int type = intent.getIntExtra(EXTRA_DOWNLOAD_TYPE, DOWNLOAD_TYPE_UNDEF);
         Intent currentLast = lastSentIntent;
         int lastType = currentLast == null ? -1 :
             currentLast.getIntExtra(EXTRA_DOWNLOAD_TYPE, DOWNLOAD_TYPE_UNDEF);
@@ -315,13 +319,26 @@ public class QuranDownloadService extends Service implements
         return;
       }
 
-      boolean result;
+      final int[] batch = intent.getIntArrayExtra(EXTRA_AUDIO_BATCH);
+
+      final DownloadStrategy strategy;
       if (startAyah != null && endAyah != null) {
         final String databaseUrl = intent.getStringExtra(EXTRA_DOWNLOAD_DATABASE);
-        result = downloadRange(url, destination, startAyah, endAyah, isGapless, details, databaseUrl);
+        if (isGapless) {
+          strategy = new GaplessDownloadStrategy(startAyah, endAyah, url, destination, notifier, details, databaseUrl, this::downloadFileWrapper);
+        } else {
+          strategy = new GappedDownloadStrategy(startAyah, endAyah, url, quranInfo, destination, notifier, details, this::downloadFileWrapper);
+        }
+      } else if (batch != null) {
+        final String databaseUrl = intent.getStringExtra(EXTRA_DOWNLOAD_DATABASE);
+        strategy = new BatchDownloadStrategy(url, destination, isGapless, quranInfo, notifier, details, batch, databaseUrl, this::downloadFileWrapper);
       } else {
-        result = download(url, destination, outputFile, details);
+        strategy = new SingleFileDownloadStrategy(url, destination, outputFile, details, notifier, this::downloadFileWrapper);
       }
+
+      details.setIsGapless(isGapless);
+      final boolean result = downloadCommon(strategy, details);
+
       if (result && isZipFile) {
         successfulZippedDownloads.put(url, true);
       } else if (!result) {
@@ -331,163 +348,16 @@ public class QuranDownloadService extends Service implements
     }
   }
 
-  private boolean download(String urlString, String destination,
-      String outputFile,
-      NotificationDetails details) {
-    // make the directory if it doesn't exist
-    new File(destination).mkdirs();
-    Timber.d("making directory %s", destination);
-
-    details.setFileStatus(1, 1);
-
-    // notify download starting
+  private boolean downloadCommon(DownloadStrategy strategy, NotificationDetails details) {
+    details.setFileStatus(1, strategy.fileCount());
     lastSentIntent = notifier.notifyProgress(details, 0, 0);
-    boolean result = downloadFileWrapper(urlString, destination, outputFile, details);
-    if (result) {
-      // first notify that the file was downloaded
-      notifier.notifyFileDownloaded(details, outputFile);
-      // then download that the batch (containing only one file in this case)
-      // was downloaded.
+
+    if (strategy.downloadFiles()) {
       lastSentIntent = notifier.notifyDownloadSuccessful(details);
-    }
-    return result;
-  }
-
-  private boolean downloadRange(String urlString,
-                                String destination,
-                                SuraAyah startVerse,
-                                SuraAyah endVerse,
-                                boolean isGapless,
-                                NotificationDetails details,
-                                @Nullable String databaseUrl) {
-    details.setIsGapless(isGapless);
-    new File(destination).mkdirs();
-
-    int totalAyahs = 0;
-    int startSura = startVerse.sura;
-    int startAyah = startVerse.ayah;
-    int endSura = endVerse.sura;
-    int endAyah = endVerse.ayah;
-
-    if (isGapless) {
-      totalAyahs = endSura - startSura + 1;
-      if (endAyah == 0) {
-        totalAyahs--;
-      }
+      return true;
     } else {
-      if (startSura == endSura) {
-        totalAyahs = endAyah - startAyah + 1;
-      } else {
-        // add the number ayahs from suras in between start and end
-        for (int i = startSura + 1; i < endSura; i++) {
-          totalAyahs += quranInfo.getNumberOfAyahs(i);
-        }
-
-        // add the number of ayahs from the start sura
-        totalAyahs += quranInfo.getNumberOfAyahs(startSura) - startAyah + 1;
-
-        // add the number of ayahs from the last sura
-        totalAyahs += endAyah;
-      }
+      return false;
     }
-
-    Timber.d("downloadRange for %d between %d:%d to %d:%d, gaplessFlag: %s",
-        totalAyahs, startSura, startAyah, endSura, endAyah, isGapless ? "true" : "false");
-
-    details.setFileStatus(1, totalAyahs);
-    lastSentIntent = notifier.notifyProgress(details, 0, 0);
-
-    // extension and filename template don't change
-    final String singleFileName =
-        QuranDownloadService.getFilenameFromUrl(urlString);
-    final int extLocation = singleFileName.lastIndexOf(".");
-    final String extension = singleFileName.substring(extLocation);
-
-    boolean result;
-    for (int i = startSura; i <= endSura; i++) {
-      int lastAyah = quranInfo.getNumberOfAyahs(i);
-      if (i == endSura) {
-        lastAyah = endAyah;
-      }
-      int firstAyah = 1;
-      if (i == startSura) {
-        firstAyah = startAyah;
-      }
-
-      details.sura = i;
-      if (isGapless) {
-        if (i == endSura && endAyah == 0) {
-          continue;
-        }
-        String destDir = destination + File.separator;
-        String url = String.format(Locale.US, urlString, i);
-        Timber.d("gapless asking to download %s to %s", url, destDir);
-        final String filename = QuranDownloadService.getFilenameFromUrl(url);
-        if (!new File(destDir, filename).exists()) {
-          result = downloadFileWrapper(url, destDir, filename, details);
-          if (!result) {
-            return false;
-          }
-          notifier.notifyFileDownloaded(details, filename);
-        }
-        details.currentFile++;
-        continue;
-      }
-
-      // same destination directory for ayahs within the same sura
-      String destDir = destination + File.separator + i + File.separator;
-      new File(destDir).mkdirs();
-
-      for (int j = firstAyah; j <= lastAyah; j++) {
-        details.ayah = j;
-        String url = String.format(Locale.US, urlString, i, j);
-        String destFile = j + extension;
-        if (!new File(destDir, destFile).exists()) {
-          result = downloadFileWrapper(url, destDir, destFile, details);
-          if (!result) {
-            return false;
-          }
-          notifier.notifyFileDownloaded(details, destFile);
-        }
-
-        details.currentFile++;
-      }
-    }
-
-    if (isGapless) {
-      // gapless case, check if we're also bundling the database
-      if (databaseUrl != null) {
-        final String destDir = destination + File.separator;
-        Timber.d("gapless asking to download %s to %s", databaseUrl, destDir);
-        final String filename = QuranDownloadService.getFilenameFromUrl(databaseUrl);
-        if (!new File(destDir, filename).exists()) {
-          result = downloadFileWrapper(databaseUrl, destDir, filename, details);
-          if (!result) {
-            return false;
-          }
-          notifier.notifyFileDownloaded(details, filename);
-        }
-      }
-    } else {
-      // not gapless
-      // attempt to download basmallah if it doesn't exist
-      String destDir = destination + File.separator + 1 + File.separator;
-      new File(destDir).mkdirs();
-      File basmallah = new File(destDir, "1" + extension);
-      if (!basmallah.exists()) {
-        Timber.d("basmallah doesn't exist, downloading...");
-        String url = String.format(Locale.US, urlString, 1, 1);
-        String destFile = 1 + extension;
-        result = downloadFileWrapper(url, destDir, destFile, details);
-        if (!result) {
-          return false;
-        }
-      }
-    }
-
-    lastSentIntent = notifier.notifyDownloadSuccessful(details);
-
-    return true;
   }
 
   private boolean downloadFileWrapper(String urlString, String destination,
@@ -501,6 +371,7 @@ public class QuranDownloadService extends Service implements
       }
 
       String url = urlString;
+      // if we retry and it's not the first time, try the fallback url
       if (fallbackByDefault || i > 0) {
         url = urlUtil.fallbackUrl(url);
 
@@ -520,6 +391,7 @@ public class QuranDownloadService extends Service implements
       }
 
       if (res == DOWNLOAD_SUCCESS) {
+        // if it succeeds after the first time, always use the fallback url
         fallbackByDefault = (i > 0);
         return true;
       } else if (res == QuranDownloadNotifier.ERROR_DISK_SPACE ||
