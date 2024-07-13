@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.0"
+agp = "8.5.1"
 kotlin = "2.0.0"
 ksp = "2.0.0-1.0.22"
 
@@ -60,7 +60,7 @@ reorderableComposeVersion = "0.9.6"
 molecule = "1.4.3"
 
 # recitations
-grpcOkhttpVersion = "1.65.0"
+grpcOkhttpVersion = "1.65.1"
 googleAuthVersion = "1.24.0"
 googleCloudSpeechVersion = "4.41.0"
 
