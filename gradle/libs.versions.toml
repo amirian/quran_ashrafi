@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.1"
+agp = "8.5.2"
 kotlin = "2.0.10"
 ksp = "2.0.10-1.0.24"
 
@@ -14,7 +14,7 @@ crashlytics = "3.0.2"
 daggerVersion = "2.52"
 dnsjavaVersion = "2.1.9"
 errorprone = "4.0.1"
-errorproneCoreVersion = "2.29.2"
+errorproneCoreVersion = "2.30.0"
 googleServices = "4.4.2"
 immutableCollectionsVersion = "0.3.7"
 leakcanaryAndroidVersion = "2.14"
@@ -22,7 +22,7 @@ moshiVersion = "1.15.1"
 okioVersion = "3.9.0"
 retrofitVersion = "2.11.0"
 rxandroidVersion = "3.0.2"
-rxjavaVersion = "3.1.8"
+rxjavaVersion = "3.1.9"
 sqldelight = "2.0.2"
 timberVersion = "5.0.1"
 
@@ -61,7 +61,7 @@ molecule = "1.4.3"
 
 # recitations
 grpcOkhttpVersion = "1.66.0"
-googleAuthVersion = "1.24.0"
+googleAuthVersion = "1.24.1"
 googleCloudSpeechVersion = "4.42.0"
 
 # testing
