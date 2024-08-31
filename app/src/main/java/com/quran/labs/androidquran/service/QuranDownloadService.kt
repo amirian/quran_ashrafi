@@ -461,9 +461,15 @@ class QuranDownloadService : Service(), ZipListener<NotificationDetails> {
   }
 
   private fun downloadUrl(
-    url: String, path: String, filename: String,
+    /*Me*/oldurl: String, path: String, filename: String,
     notificationInfo: NotificationDetails
   ): Int {
+//Me: a temporary repo for Ashrafi pages
+    val url =
+      if (oldurl == "https://android.quran.com/data/zips/images_1260.zip"
+        || oldurl == "https://quran.app/data/zips/images_1260.zip")
+        "https://github.com/amirian/quran_ashrafi/raw/Ashrafi/ashrafi-images/images_1260.zip"
+      else oldurl;
     Timber.d("downloading %s", url)
     val builder: Request.Builder = Request.Builder()
       .url(url).tag(DEFAULT_TAG)
