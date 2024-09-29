@@ -62,13 +62,13 @@ molecule = "1.4.3"
 # recitations
 grpcOkhttpVersion = "1.68.0"
 googleAuthVersion = "1.27.0"
-googleCloudSpeechVersion = "4.44.0"
+googleCloudSpeechVersion = "4.46.0"
 
 # testing
 junitVersion = "4.13.2"
 espressoVersion = "3.6.1"
 truthVersion = "1.4.4"
-mockitoVersion = "5.13.0"
+mockitoVersion = "5.14.0"
 robolectricVersion = "4.13"
 turbineVersion = "1.1.0"
 
