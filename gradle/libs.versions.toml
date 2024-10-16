@@ -1,14 +1,14 @@
 [versions]
-agp = "8.7.0"
-kotlin = "2.0.20"
-ksp = "2.0.20-1.0.25"
+agp = "8.7.1"
+kotlin = "2.0.21"
+ksp = "2.0.21-1.0.25"
 
 # required within the Gradle convention plugins - not unused
 composeBomVersion = "2024.09.03"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
-anvil = "0.3.1"
+anvil = "0.3.2"
 coroutinesVersion = "1.9.0"
 crashlytics = "3.0.2"
 daggerVersion = "2.52"
@@ -51,7 +51,7 @@ firebaseCrashlyticsVersion = "19.2.0"
 
 # ui libraries
 accompanistVersion = "0.36.0"
-balloonVersion = "1.6.7"
+balloonVersion = "1.6.8"
 tooltipComposeVersion = "0.2.0"
 insetterVersion = "0.6.1"
 materialComponentsVersion = "1.12.0"
@@ -62,13 +62,13 @@ molecule = "1.4.3"
 # recitations
 grpcOkhttpVersion = "1.68.0"
 googleAuthVersion = "1.28.0"
-googleCloudSpeechVersion = "4.46.0"
+googleCloudSpeechVersion = "4.47.0"
 
 # testing
 junitVersion = "4.13.2"
 espressoVersion = "3.6.1"
 truthVersion = "1.4.4"
-mockitoVersion = "5.14.1"
+mockitoVersion = "5.14.2"
 robolectricVersion = "4.13"
 turbineVersion = "1.1.0"
 
