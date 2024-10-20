@@ -4,7 +4,7 @@ kotlin = "2.0.21"
 ksp = "2.0.21-1.0.25"
 
 # required within the Gradle convention plugins - not unused
-composeBomVersion = "2024.09.03"
+composeBomVersion = "2024.10.00"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
@@ -28,10 +28,10 @@ timberVersion = "5.0.1"
 
 # androidx library versions
 androidxAppcompatVersion = "1.7.0"
-androidxActivityComposeVersion = "1.9.2"
-androidxAnnotationVersion = "1.8.2"
+androidxActivityComposeVersion = "1.9.3"
+androidxAnnotationVersion = "1.9.0"
 androidxCoreVersion = "1.13.1"
-androidxNavigationVersion = "2.8.2"
+androidxNavigationVersion = "2.8.3"
 androidxDynamicAnimationVersion = "1.0.0"
 androidxFragmentVersion = "1.8.4"
 androidxJunitExtVersion = "1.2.1"
@@ -70,7 +70,7 @@ espressoVersion = "3.6.1"
 truthVersion = "1.4.4"
 mockitoVersion = "5.14.2"
 robolectricVersion = "4.13"
-turbineVersion = "1.1.0"
+turbineVersion = "1.2.0"
 
 [libraries]
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
