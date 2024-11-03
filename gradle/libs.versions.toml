@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.2"
+junit = "1.2.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.26"
 
@@ -8,7 +9,7 @@ composeBomVersion = "2024.10.01"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
-anvil = "0.3.3"
+anvil = "0.4.0"
 coroutinesVersion = "1.9.0"
 crashlytics = "3.0.2"
 daggerVersion = "2.52"
@@ -51,7 +52,7 @@ firebaseCrashlyticsVersion = "19.2.1"
 
 # ui libraries
 accompanistVersion = "0.36.0"
-balloonVersion = "1.6.9"
+balloonVersion = "1.6.10"
 tooltipComposeVersion = "0.2.0"
 insetterVersion = "0.6.1"
 materialComponentsVersion = "1.12.0"
@@ -73,6 +74,7 @@ robolectricVersion = "4.13"
 turbineVersion = "1.2.0"
 
 [libraries]
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutableCollectionsVersion" }
