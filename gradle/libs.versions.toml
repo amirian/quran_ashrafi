@@ -2,7 +2,7 @@
 agp = "8.7.2"
 junit = "1.2.1"
 kotlin = "2.0.21"
-ksp = "2.0.21-1.0.27"
+ksp = "2.0.21-1.0.28"
 
 # required within the Gradle convention plugins - not unused
 composeBomVersion = "2024.11.00"
@@ -71,7 +71,7 @@ junitVersion = "4.13.2"
 espressoVersion = "3.6.1"
 truthVersion = "1.4.4"
 mockitoVersion = "5.14.2"
-robolectricVersion = "4.13"
+robolectricVersion = "4.14"
 turbineVersion = "1.2.0"
 
 [libraries]
