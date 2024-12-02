@@ -78,8 +78,7 @@ class QuranDataProvider : ContentProvider() {
       return null
     }
     val queryIsArabic = QuranUtils.doesStringContainArabic(query)
-    val haveArabic = queryIsArabic &&
-        quranFileUtils.hasTranslation(QURAN_ARABIC_DATABASE)
+    val haveArabic = queryIsArabic && quranFileUtils.hasArabicSearchDatabase()
     val translations = availableTranslations()
     if (translations.isEmpty() && queryIsArabic && !haveArabic) {
       return null
@@ -200,7 +199,7 @@ class QuranDataProvider : ContentProvider() {
 
   private fun search(query: String, databaseName: String, wantSnippets: Boolean): Cursor? {
     val handler = getDatabaseHandler(context!!, databaseName, quranFileUtils)
-    return handler.search(query.trim(), wantSnippets, QURAN_ARABIC_DATABASE == databaseName)
+    return handler.search(query, wantSnippets, QURAN_ARABIC_DATABASE == databaseName)
   }
 
   override fun getType(uri: Uri): String? {

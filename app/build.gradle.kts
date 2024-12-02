@@ -1,6 +1,4 @@
 import net.ltgt.gradle.errorprone.ErrorProneOptions
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Locale
 
 plugins {
@@ -13,8 +11,7 @@ plugins {
 
 // whether or not to use Firebase - Firebase is enabled by default, and is only disabled for
 // providing apks for open source distribution stores.
-val useFirebase = !project.hasProperty("disableFirebase") &&
-    !project.hasProperty("disableCrashlytics")
+val useFirebase = !project.hasProperty("disableFirebase")
 
 // only want to apply the Firebase plugin if we're building a release build. moving this to the
 // release build type won't work, since debug builds would also implicitly get the plugin.
@@ -34,8 +31,8 @@ android {
   namespace = "com.quran.labs.androidquran"
 
   defaultConfig {
-    versionCode = 3441
-    versionName = "3.4.4"
+    versionCode = 3450
+    versionName = "3.4.5"
     testInstrumentationRunner = "com.quran.labs.androidquran.core.QuranTestRunner"
   }
 
@@ -94,6 +91,7 @@ android {
     }
   }
 
+  @Suppress("UnstableApiUsage")
   testOptions {
     unitTests {
       isIncludeAndroidResources = true
@@ -110,14 +108,6 @@ android {
     resources {
       excludes += setOf("META-INF/*.kotlin_module", "META-INF/DEPENDENCIES", "META-INF/INDEX.LIST")
     }
-  }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-  // TODO necessary until anvil supports something for K2 contribution merging
-  compilerOptions {
-    progressiveMode.set(false)
-    languageVersion.set(KotlinVersion.KOTLIN_1_9)
   }
 }
 
@@ -192,6 +182,15 @@ dependencies {
   ksp(libs.dagger.compiler)
   kspTest(libs.dagger.compiler)
   implementation(libs.dagger.runtime)
+
+  // analytics
+  debugImplementation(project(":feature:analytics-noop"))
+  add("betaImplementation", project(":feature:analytics-noop"))
+  if (useFirebase) {
+    releaseImplementation(project(":feature:firebase-analytics"))
+  } else {
+    releaseImplementation(project(":feature:analytics-noop"))
+  }
 
   // workmanager
   implementation(libs.androidx.work.runtime.ktx)
