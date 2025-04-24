@@ -1,11 +1,11 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
 junit = "1.2.1"
 kotlin = "2.1.20"
 ksp = "2.1.20-2.0.0"
 
 # required within the Gradle convention plugins - not unused
-composeBomVersion = "2025.04.00"
+composeBomVersion = "2025.04.01"
 media3ExoplayerVersion = "1.6.1"
 okhttpBomVersion = "4.12.0"
 
@@ -13,10 +13,10 @@ okhttpBomVersion = "4.12.0"
 anvil = "0.4.1"
 coroutinesVersion = "1.10.2"
 crashlytics = "3.0.3"
-daggerVersion = "2.56.1"
+daggerVersion = "2.56.2"
 dnsjavaVersion = "2.1.9"
-errorprone = "4.1.0"
-errorproneCoreVersion = "2.37.0"
+errorprone = "4.2.0"
+errorproneCoreVersion = "2.38.0"
 googleServices = "4.4.2"
 immutableCollectionsVersion = "0.3.8"
 leakcanaryAndroidVersion = "2.14"
@@ -44,7 +44,7 @@ androidxRecyclerViewVersion = "1.4.0"
 androidxSwipeRefreshVersion = "1.1.0"
 androidxPagingVersion = "3.3.6"
 androidxPagingComposeVersion = "3.3.6"
-androidxWorkManagerVersion = "2.10.0"
+androidxWorkManagerVersion = "2.10.1"
 androidxWindowManager = "1.3.0"
 
 # firebase
@@ -62,7 +62,7 @@ reorderableComposeVersion = "0.9.6"
 molecule = "2.1.0"
 
 # recitations
-grpcOkhttpVersion = "1.71.0"
+grpcOkhttpVersion = "1.72.0"
 googleAuthVersion = "1.33.1"
 googleCloudSpeechVersion = "4.55.0"
 
