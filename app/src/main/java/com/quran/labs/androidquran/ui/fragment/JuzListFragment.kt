@@ -21,7 +21,6 @@ import com.quran.labs.androidquran.ui.QuranActivity
 import com.quran.labs.androidquran.ui.helpers.QuranListAdapter
 import com.quran.labs.androidquran.ui.helpers.QuranRow
 import com.quran.labs.androidquran.ui.helpers.QuranRow.Builder
-import com.quran.labs.androidquran.util.QuranSettings
 import com.quran.labs.androidquran.util.QuranUtils
 import com.quran.labs.androidquran.view.JuzView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -54,9 +53,9 @@ class JuzListFragment : Fragment() {
   lateinit var juzListPresenter: JuzListPresenter
 
   override fun onCreateView(
-      inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.quran_list, container, false)
 
@@ -102,23 +101,22 @@ class JuzListFragment : Fragment() {
     val activity = requireActivity()
     if (activity is QuranActivity) {
       disposable = activity.latestPageObservable
-          .first(Constants.NO_PAGE)
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribeWith(object : DisposableSingleObserver<Int>() {
-            override fun onSuccess(recentPage: Int) {
-              if (recentPage != Constants.NO_PAGE) {
-                val juz = quranInfo.getJuzFromPage(recentPage)
-                val position = (juz - 1) * 9
-                recyclerView?.scrollToPosition(position)
-              }
+        .first(Constants.NO_PAGE)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(object : DisposableSingleObserver<Int>() {
+          override fun onSuccess(recentPage: Int) {
+            if (recentPage != Constants.NO_PAGE) {
+              val juz = quranInfo.getJuzFromPage(recentPage)
+              val position = (juz - 1) * 9
+              recyclerView?.scrollToPosition(position)
             }
+          }
 
-            override fun onError(e: Throwable) {}
-          })
+          override fun onError(e: Throwable) {}
+        })
     }
 
-    val settings = QuranSettings.getInstance(activity)
-    if (settings.isArabicNames) {
+    if (QuranUtils.isRtl()) {
       updateScrollBarPositionHoneycomb()
     }
     super.onResume()
@@ -157,13 +155,13 @@ class JuzListFragment : Fragment() {
       if (i % 8 == 0) {
         val juz = 1 + i / 8
         val juzTitle = activity.getString(
-            R.string.juz2_description,
-            QuranUtils.getLocalizedNumber(activity, juz)
+          R.string.juz2_description,
+          QuranUtils.getLocalizedNumber(juz)
         )
         val builder = Builder()
-            .withType(QuranRow.HEADER)
-            .withText(juzTitle)
-            .withPage(quranInfo.getStartingPageForJuz(juz))
+          .withType(QuranRow.HEADER)
+          .withText(juzTitle)
+          .withPage(quranInfo.getStartingPageForJuz(juz))
         elements[ctr++] = builder.build()
       }
       if (i % 2 == 0) { //Me{ added this if
@@ -189,8 +187,8 @@ class JuzListFragment : Fragment() {
 
   companion object {
     private val ENTRY_TYPES = intArrayOf(
-        JuzView.TYPE_JUZ, JuzView.TYPE_QUARTER,
-        JuzView.TYPE_HALF, JuzView.TYPE_THREE_QUARTERS
+      JuzView.TYPE_JUZ, JuzView.TYPE_QUARTER,
+      JuzView.TYPE_HALF, JuzView.TYPE_THREE_QUARTERS
     )
 
     fun newInstance(): JuzListFragment {
