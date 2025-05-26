@@ -87,10 +87,10 @@ public class QuranDisplayHelper {
     if (rub3 % 2 == 1) return lastPopupTime; hizb=rub3/2+1;
     if (rub3 % 8 == 0) {
       sb.append(context.getString(R.string.quran_juz2)).append(' ')
-          .append(QuranUtils.getLocalizedNumber(context,
+          .append(QuranUtils.getLocalizedNumber(
               (hizb / 4) + 1));
     }else{ sb.append(context.getString(R.string.quran_hizb)).append(' ')
-        .append(QuranUtils.getLocalizedNumber(context, hizb));
+        .append(QuranUtils.getLocalizedNumber(hizb));
     }
 //Me}
     String result = sb.toString();
@@ -109,7 +109,7 @@ public class QuranDisplayHelper {
         .append(' ')
         .append(context.getString(R.string.quran_hizb))
         .append(' ')
-        .append(QuranUtils.getLocalizedNumber(context, rub3 / 2 +
+        .append(QuranUtils.getLocalizedNumber(rub3 / 2 +
             1)).toString();
   /*Me Changed this with the preceding statement
     int hizb = (rub3 / 4) + 1;

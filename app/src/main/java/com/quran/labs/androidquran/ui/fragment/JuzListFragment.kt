@@ -176,7 +176,7 @@ class JuzListFragment : Fragment() {
             .withPage(page)
             .withJuzType(ENTRY_TYPES[(1 + i / 2) % 4])//Me "i"->"(1 + i / 2)"
         if (true) { //Me "i % 4 == 0"->"true"
-          val overlayText = QuranUtils.getLocalizedNumber(activity, 1 + i / 2) //Me "4"->"2"
+          val overlayText = QuranUtils.getLocalizedNumber(1 + i / 2) //Me "4"->"2"
           builder.withJuzOverlayText(overlayText)
         }
         elements[ctr++] = builder.build()
