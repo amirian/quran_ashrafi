@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.0"
+agp = "8.10.1"
 junit = "1.2.1"
 kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
@@ -21,7 +21,7 @@ googleServices = "4.4.2"
 immutableCollectionsVersion = "0.4.0"
 leakcanaryAndroidVersion = "2.14"
 moshiVersion = "1.15.2"
-okioVersion = "3.11.0"
+okioVersion = "3.12.0"
 retrofitVersion = "3.0.0"
 rxandroidVersion = "3.0.2"
 rxjavaVersion = "3.1.10"
@@ -62,7 +62,7 @@ reorderableComposeVersion = "0.9.6"
 molecule = "2.1.0"
 
 # recitations
-grpcOkhttpVersion = "1.72.0"
+grpcOkhttpVersion = "1.73.0"
 googleAuthVersion = "1.35.0"
 googleCloudSpeechVersion = "4.58.0"
 
