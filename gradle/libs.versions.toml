@@ -5,14 +5,14 @@ kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
 
 # required within the Gradle convention plugins - not unused
-composeBomVersion = "2025.05.01"
+composeBomVersion = "2025.06.00"
 media3ExoplayerVersion = "1.7.1"
 okhttpBomVersion = "4.12.0"
 
 # dependencies
 anvil = "0.4.1"
 coroutinesVersion = "1.10.2"
-crashlytics = "3.0.3"
+crashlytics = "3.0.4"
 daggerVersion = "2.56.2"
 dnsjavaVersion = "2.1.9"
 errorprone = "4.2.0"
@@ -49,7 +49,7 @@ androidxWindowManager = "1.4.0"
 
 # firebase
 firebaseAnalyticsVersion = "22.4.0"
-firebaseCrashlyticsVersion = "19.4.3"
+firebaseCrashlyticsVersion = "19.4.4"
 
 # ui libraries
 accompanistVersion = "0.36.0"
@@ -63,8 +63,8 @@ molecule = "2.1.0"
 
 # recitations
 grpcOkhttpVersion = "1.73.0"
-googleAuthVersion = "1.36.0"
-googleCloudSpeechVersion = "4.58.0"
+googleAuthVersion = "1.37.0"
+googleCloudSpeechVersion = "4.59.0"
 
 # testing
 junitVersion = "4.13.2"

@@ -46,7 +46,7 @@
     <activity
         android:name=".QuranDataActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
-        android:theme="@style/QuranToolBar"
+        android:theme="@style/QuranToolBarDayNight"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -65,9 +65,10 @@
         android:exported="false"/>
     <activity
         android:name=".AboutUsActivity"
-        android:theme="@style/QuranToolBar"
+        android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
     <activity android:name=".HelpActivity"
+        android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
     <activity
         android:name=".ui.PagerActivity"
@@ -93,7 +94,7 @@
     <activity
         android:name=".SearchActivity"
         android:launchMode="singleTop"
-        android:theme="@style/QuranDayNight"
+        android:theme="@style/QuranToolBarDayNight"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.SEARCH"/>
@@ -163,7 +164,7 @@
     </activity>
 
     <activity android:name=".pageselect.PageSelectActivity"
-        android:theme="@style/QuranToolBar"
+        android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
 
     <service
