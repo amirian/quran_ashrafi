@@ -1,15 +1,10 @@
 plugins {
   id("quran.android.library.compose")
-  alias(libs.plugins.anvil)
+  alias(libs.plugins.metro)
   alias(libs.plugins.ksp)
 }
 
 android.namespace = "com.quran.mobile.feature.audiobar"
-
-anvil {
-  useKsp(true)
-  generateDaggerFactories.set(true)
-}
 
 dependencies {
   implementation(project(":common:data"))
@@ -28,9 +23,6 @@ dependencies {
   // implementation but removed for release builds
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.compose.ui.tooling)
-
-  // dagger
-  implementation(libs.dagger.runtime)
 
   // coroutines
   implementation(libs.kotlinx.coroutines.core)

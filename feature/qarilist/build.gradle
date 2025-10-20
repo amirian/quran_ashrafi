@@ -1,14 +1,9 @@
 plugins {
   id 'quran.android.library.compose'
-  alias libs.plugins.anvil
+  alias libs.plugins.metro
 }
 
 android.namespace 'com.quran.mobile.feature.qarilist'
-
-anvil {
-  useKsp(true)
-  generateDaggerFactories.set(true)
-}
 
 dependencies {
   implementation project(path: ':common:audio')
@@ -16,9 +11,6 @@ dependencies {
   implementation project(path: ':common:ui:core')
 
   implementation libs.androidx.annotation
-
-  // dagger
-  implementation libs.dagger.runtime
 
   // compose
   implementation libs.compose.animation

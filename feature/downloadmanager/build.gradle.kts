@@ -1,14 +1,9 @@
 plugins {
   id("quran.android.library.compose")
-  alias(libs.plugins.anvil)
+  alias(libs.plugins.metro)
 }
 
 android.namespace = "com.quran.mobile.feature.downloadmanager"
-
-anvil {
-  useKsp(contributesAndFactoryGeneration = true, componentMerging = true)
-  generateDaggerFactories.set(true)
-}
 
 dependencies {
   implementation(project(":common:audio"))
@@ -21,9 +16,6 @@ dependencies {
 
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.activity.compose)
-
-  // dagger
-  implementation(libs.dagger.runtime)
 
   // compose
   implementation(libs.compose.animation)
