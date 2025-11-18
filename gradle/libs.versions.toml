@@ -7,8 +7,8 @@ ksp = "2.3.2"
 # required within the Gradle convention plugins - not unused
 composeBomVersion = "2025.11.00"
 media3ExoplayerVersion = "1.8.0"
-okhttpBomVersion = "5.3.0"
-firebaseBomVersion = "34.5.0"
+okhttpBomVersion = "5.3.1"
+firebaseBomVersion = "34.6.0"
 
 # dependencies
 coroutinesVersion = "1.10.2"
@@ -21,11 +21,11 @@ googleServices = "4.4.4"
 immutableCollectionsVersion = "0.4.0"
 leakcanaryAndroidVersion = "2.14"
 moshiVersion = "1.15.2"
-okioVersion = "3.16.2"
+okioVersion = "3.16.3"
 retrofitVersion = "3.0.0"
 rxandroidVersion = "3.0.2"
 rxjavaVersion = "3.1.12"
-sqldelight = "2.1.0"
+sqldelight = "2.2.1"
 timberVersion = "5.0.1"
 
 # androidx library versions
@@ -60,7 +60,7 @@ molecule = "2.2.0"
 # recitations
 grpcOkhttpVersion = "1.76.0"
 googleAuthVersion = "1.40.0"
-googleCloudSpeechVersion = "4.74.0"
+googleCloudSpeechVersion = "4.75.0"
 
 # testing
 junitVersion = "4.13.2"
