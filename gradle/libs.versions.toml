@@ -30,7 +30,7 @@ timberVersion = "5.0.1"
 
 # androidx library versions
 androidxAppcompatVersion = "1.7.1"
-androidxActivityComposeVersion = "1.12.3"
+androidxActivityComposeVersion = "1.12.4"
 androidxAnnotationVersion = "1.9.1"
 androidxCoreVersion = "1.17.0"
 androidxNavigationVersion = "2.9.7"
@@ -43,7 +43,7 @@ androidxPreferencesVersion = "1.2.1"
 androidxRecyclerViewVersion = "1.4.0"
 androidxSwipeRefreshVersion = "1.2.0"
 androidxPagingVersion = "3.4.0"
-androidxPagingComposeVersion = "3.4.0"
+androidxPagingComposeVersion = "3.4.1"
 androidxWorkManagerVersion = "2.11.1"
 androidxWindowManager = "1.5.1"
 
@@ -60,7 +60,7 @@ molecule = "2.2.0"
 # recitations
 grpcOkhttpVersion = "1.79.0"
 googleAuthVersion = "1.42.1"
-googleCloudSpeechVersion = "4.78.0"
+googleCloudSpeechVersion = "4.79.0"
 
 # testing
 junitVersion = "4.13.2"
