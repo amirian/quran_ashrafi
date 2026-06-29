@@ -13,14 +13,19 @@ import com.quran.mobile.bookmark.sync.FakeLocalDataChangeNotifier
 import com.quran.mobile.bookmark.time.FakeMobileSyncTimestampProvider
 import com.quran.shared.persistence.QuranDatabase
 import com.quran.shared.persistence.repository.bookmark.repository.BookmarksRepositoryImpl
+import com.quran.shared.persistence.repository.collection.repository.CollectionsRepository
 import com.quran.shared.persistence.repository.collection.repository.CollectionsRepositoryImpl
 import com.quran.shared.persistence.repository.collectionbookmark.repository.CollectionBookmarksRepositoryImpl
+import com.quran.shared.persistence.util.PlatformDateTime
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import com.quran.shared.persistence.model.Collection as SyncCollection
 
 class BookmarksDaoImplTest {
 
@@ -40,11 +45,18 @@ class BookmarksDaoImplTest {
     appCoroutineScope = AppCoroutineScope()
     localDataChangeNotifier = FakeLocalDataChangeNotifier()
     timestampProvider = FakeMobileSyncTimestampProvider()
+    val collectionsRepository = CollectionsRepositoryImpl(database)
+    val collectionBookmarksRepository = CollectionBookmarksRepositoryImpl(database)
     dao = BookmarksDaoImpl(
       quranInfoProvider = { quranInfo },
       bookmarksRepository = BookmarksRepositoryImpl(database),
-      collectionsRepository = CollectionsRepositoryImpl(database),
-      collectionBookmarksRepository = CollectionBookmarksRepositoryImpl(database),
+      collectionsRepository = collectionsRepository,
+      collectionBookmarksRepository = collectionBookmarksRepository,
+      bookmarkCollectionsState = RepositoryBookmarkCollectionsState(
+        collectionsRepository,
+        collectionBookmarksRepository,
+        appCoroutineScope
+      ),
       localDataChangeNotifier = localDataChangeNotifier,
       timestampProvider = timestampProvider,
       appCoroutineScope = appCoroutineScope
@@ -77,6 +89,7 @@ class BookmarksDaoImplTest {
     assertThat(bookmarks.single().ayah).isEqualTo(255)
     assertThat(bookmarks.single().page).isEqualTo(quranInfo.getPageFromSuraAyah(2, 255))
     assertThat(bookmarks.single().timestamp).isEqualTo(timestampProvider.timestampSeconds)
+    assertThat(bookmarks.single().tags).isEmpty()
     assertThat(bookmarks.single().isPageBookmark()).isFalse()
     assertThat(localDataChangeNotifier.updateCount).isEqualTo(1)
   }
@@ -120,7 +133,7 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(36, 1)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(36, 1))
     val ayahBookmark = dao.bookmarks().single()
-    val pageBookmark = Bookmark(999, null, null, 50, 1)
+    val pageBookmark = Bookmark("bookmark-999", null, null, 50, 1)
 
     dao.removeBookmarks(listOf(ayahBookmark, pageBookmark))
 
@@ -161,8 +174,10 @@ class BookmarksDaoImplTest {
       assertThat(awaitItem()).isEmpty()
 
       dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
-      assertThat(awaitItem().map { it.sura to it.ayah })
+      val addedBookmarks = awaitItem()
+      assertThat(addedBookmarks.map { it.sura to it.ayah })
         .containsExactly(suraAyah.sura to suraAyah.ayah)
+      assertThat(addedBookmarks.single().tags).isEmpty()
 
       dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
       assertThat(awaitItem()).isEmpty()
@@ -191,6 +206,22 @@ class BookmarksDaoImplTest {
       assertThat(awaitItem().map { it.sura to it.ayah }).containsExactly(2 to 255)
       cancelAndIgnoreRemainingEvents()
     }
+  }
+
+  @Test
+  fun `repository collections state includes default collection without custom collections`() = runTest {
+    val collectionsState = RepositoryBookmarkCollectionsState(
+      CollectionsRepositoryImpl(database),
+      CollectionBookmarksRepositoryImpl(database),
+      appCoroutineScope
+    )
+
+    val collectionsWithBookmarks = collectionsState.currentCollectionsWithBookmarks()
+
+    assertThat(collectionsWithBookmarks.map { collectionWithBookmarks -> collectionWithBookmarks.collection.localId })
+      .containsExactly(DEFAULT_BOOKMARK_COLLECTION_ID)
+    assertThat(collectionsWithBookmarks.single().collection.isDefault).isTrue()
+    assertThat(collectionsWithBookmarks.single().bookmarks).isEmpty()
   }
 
   @Test
@@ -224,9 +255,63 @@ class BookmarksDaoImplTest {
   fun `update tag returns false when tag no longer exists`() = runTest {
     localDataChangeNotifier.reset()
 
-    val updated = dao.updateTag(com.quran.data.model.bookmark.Tag(999, "Missing"))
+    val updated = dao.updateTag(com.quran.data.model.bookmark.Tag("missing", "Missing"))
 
     assertThat(updated).isFalse()
+    assertThat(localDataChangeNotifier.updateCount).isEqualTo(0)
+  }
+
+  @Test
+  fun `tags exclude default collection`() = runTest {
+    val collectionsRepository = DefaultCollectionTestRepository(timestampProvider.now())
+    val collectionBookmarksRepository = CollectionBookmarksRepositoryImpl(database)
+    val dao = BookmarksDaoImpl(
+      quranInfoProvider = { quranInfo },
+      bookmarksRepository = BookmarksRepositoryImpl(database),
+      collectionsRepository = collectionsRepository,
+      collectionBookmarksRepository = collectionBookmarksRepository,
+      bookmarkCollectionsState = RepositoryBookmarkCollectionsState(
+        collectionsRepository,
+        collectionBookmarksRepository,
+        appCoroutineScope
+      ),
+      localDataChangeNotifier = localDataChangeNotifier,
+      timestampProvider = timestampProvider,
+      appCoroutineScope = appCoroutineScope
+    )
+
+    assertThat(dao.tags()).isEmpty()
+    dao.tagsFlow().test {
+      assertThat(awaitItem()).isEmpty()
+      cancelAndIgnoreRemainingEvents()
+    }
+  }
+
+  @Test
+  fun `update tag returns false for default collection`() = runTest {
+    val collectionsRepository = DefaultCollectionTestRepository(timestampProvider.now())
+    val collectionBookmarksRepository = CollectionBookmarksRepositoryImpl(database)
+    val dao = BookmarksDaoImpl(
+      quranInfoProvider = { quranInfo },
+      bookmarksRepository = BookmarksRepositoryImpl(database),
+      collectionsRepository = collectionsRepository,
+      collectionBookmarksRepository = collectionBookmarksRepository,
+      bookmarkCollectionsState = RepositoryBookmarkCollectionsState(
+        collectionsRepository,
+        collectionBookmarksRepository,
+        appCoroutineScope
+      ),
+      localDataChangeNotifier = localDataChangeNotifier,
+      timestampProvider = timestampProvider,
+      appCoroutineScope = appCoroutineScope
+    )
+
+    val updated = dao.updateTag(
+      com.quran.data.model.bookmark.Tag(DEFAULT_BOOKMARK_COLLECTION_ID, "Default Renamed")
+    )
+
+    assertThat(updated).isFalse()
+    assertThat(collectionsRepository.updateCount).isEqualTo(0)
     assertThat(localDataChangeNotifier.updateCount).isEqualTo(0)
   }
 
@@ -237,7 +322,7 @@ class BookmarksDaoImplTest {
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
 
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
 
     val taggedBookmark = dao.bookmarks().single()
     assertThat(taggedBookmark.tags).containsExactly(tagId)
@@ -253,7 +338,7 @@ class BookmarksDaoImplTest {
     val bookmark = dao.bookmarks().single()
     localDataChangeNotifier.reset()
 
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
 
     assertThat(localDataChangeNotifier.updateCount).isEqualTo(1)
   }
@@ -265,9 +350,9 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(firstTagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(firstTagId), deleteNonTagged = true)
 
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(secondTagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(secondTagId), deleteNonTagged = true)
 
     assertThat(dao.bookmarks().single().tags).containsExactly(secondTagId)
   }
@@ -279,9 +364,9 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(firstTagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(firstTagId), deleteNonTagged = true)
 
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(secondTagId), deleteNonTagged = false)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(secondTagId), deleteNonTagged = false)
 
     assertThat(dao.bookmarks().single().tags).containsExactly(firstTagId, secondTagId)
   }
@@ -305,13 +390,50 @@ class BookmarksDaoImplTest {
   }
 
   @Test
+  fun `clearing tags from default bookmark preserves bookmark`() = runTest {
+    val tagId = dao.addTag("Review")
+    val suraAyah = SuraAyah(2, 255)
+    dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
+    val bookmark = dao.bookmarks().single()
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+
+    dao.updateBookmarkTags(arrayOf(bookmark.id), emptySet(), deleteNonTagged = true)
+
+    val remainingBookmark = dao.bookmarks().single()
+    assertThat(remainingBookmark.sura).isEqualTo(suraAyah.sura)
+    assertThat(remainingBookmark.ayah).isEqualTo(suraAyah.ayah)
+    assertThat(remainingBookmark.tags).isEmpty()
+  }
+
+  @Test
+  fun `clearing tags from custom only bookmark removes bookmark`() = runTest {
+    val tagId = dao.addTag("Review")
+    val suraAyah = SuraAyah(6, 76)
+    dao.updateAyahBookmarkTags(
+      suraAyah = suraAyah,
+      page = quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah),
+      tagIds = setOf(tagId),
+      deleteNonTagged = true
+    )
+
+    dao.updateAyahBookmarkTags(
+      suraAyah = suraAyah,
+      page = quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah),
+      tagIds = emptySet(),
+      deleteNonTagged = true
+    )
+
+    assertThat(dao.bookmarks()).isEmpty()
+  }
+
+  @Test
   fun `removing bookmark from tag unlinks only that collection`() = runTest {
     val firstTagId = dao.addTag("First")
     val secondTagId = dao.addTag("Second")
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(firstTagId, secondTagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(firstTagId, secondTagId), deleteNonTagged = true)
 
     dao.removeBookmarkFromTag(bookmark, firstTagId)
 
@@ -324,7 +446,7 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
 
     dao.removeBookmarks(listOf(bookmark))
 
@@ -338,7 +460,7 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
 
     val removed = dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
 
@@ -355,7 +477,7 @@ class BookmarksDaoImplTest {
     dao.toggleAyahBookmark(target, quranInfo.getPageFromSuraAyah(target.sura, target.ayah))
     dao.toggleAyahBookmark(other, quranInfo.getPageFromSuraAyah(other.sura, other.ayah))
     val targetBookmark = dao.bookmarks().first { it.sura == target.sura && it.ayah == target.ayah }
-    dao.updateBookmarkTags(longArrayOf(targetBookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(targetBookmark.id), setOf(tagId), deleteNonTagged = true)
 
     dao.removeBookmarksForPage(quranInfo.getPageFromSuraAyah(target.sura, target.ayah))
 
@@ -371,12 +493,12 @@ class BookmarksDaoImplTest {
     val newSuraAyah = SuraAyah(36, 1)
     dao.toggleAyahBookmark(oldSuraAyah, quranInfo.getPageFromSuraAyah(oldSuraAyah.sura, oldSuraAyah.ayah))
     val oldBookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(oldBookmark.id), setOf(oldTagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(oldBookmark.id), setOf(oldTagId), deleteNonTagged = true)
 
     dao.replaceAyahBookmarks(
       listOf(
         Bookmark(
-          id = 999,
+          id = "bookmark-999",
           sura = newSuraAyah.sura,
           ayah = newSuraAyah.ayah,
           page = quranInfo.getPageFromSuraAyah(newSuraAyah.sura, newSuraAyah.ayah),
@@ -398,11 +520,58 @@ class BookmarksDaoImplTest {
     val suraAyah = SuraAyah(2, 255)
     dao.toggleAyahBookmark(suraAyah, quranInfo.getPageFromSuraAyah(suraAyah.sura, suraAyah.ayah))
     val bookmark = dao.bookmarks().single()
-    dao.updateBookmarkTags(longArrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
+    dao.updateBookmarkTags(arrayOf(bookmark.id), setOf(tagId), deleteNonTagged = true)
     localDataChangeNotifier.reset()
 
     dao.removeBookmarks(listOf(bookmark))
 
     assertThat(localDataChangeNotifier.updateCount).isEqualTo(1)
+  }
+
+  private class DefaultCollectionTestRepository(
+    timestamp: PlatformDateTime
+  ) : CollectionsRepository {
+    private val defaultCollection = SyncCollection(
+      name = "Default",
+      lastUpdated = timestamp,
+      localId = DEFAULT_BOOKMARK_COLLECTION_ID
+    )
+
+    var updateCount = 0
+      private set
+
+    override suspend fun getAllCollections(): List<SyncCollection> {
+      return listOf(defaultCollection)
+    }
+
+    override suspend fun addCollection(name: String): SyncCollection {
+      throw UnsupportedOperationException()
+    }
+
+    override suspend fun addCollection(name: String, timestamp: PlatformDateTime): SyncCollection {
+      throw UnsupportedOperationException()
+    }
+
+    override suspend fun updateCollection(localId: String, name: String): SyncCollection {
+      updateCount++
+      return defaultCollection.copy(name = name)
+    }
+
+    override suspend fun updateCollection(
+      localId: String,
+      name: String,
+      timestamp: PlatformDateTime
+    ): SyncCollection {
+      updateCount++
+      return defaultCollection.copy(name = name, lastUpdated = timestamp)
+    }
+
+    override suspend fun deleteCollection(localId: String): Boolean {
+      throw UnsupportedOperationException()
+    }
+
+    override fun getCollectionsFlow(): Flow<List<SyncCollection>> {
+      return flowOf(listOf(defaultCollection))
+    }
   }
 }

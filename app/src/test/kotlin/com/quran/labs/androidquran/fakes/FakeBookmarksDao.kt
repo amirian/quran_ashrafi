@@ -62,8 +62,8 @@ class FakeBookmarksDao : BookmarksDao {
     return tags
   }
 
-  override suspend fun addTag(name: String): Long {
-    val id = (tags.value.maxOfOrNull { it.id } ?: 0L) + 1
+  override suspend fun addTag(name: String): String {
+    val id = "tag-${tags.value.size + 1}"
     addedTagNames += name
     tags.update { current -> current + Tag(id, name) }
     changesFlow.tryEmit(Unit)
@@ -85,11 +85,11 @@ class FakeBookmarksDao : BookmarksDao {
     changesFlow.tryEmit(Unit)
   }
 
-  override suspend fun getBookmarkTagIds(bookmarkId: Long): List<Long> {
+  override suspend fun getBookmarkTagIds(bookmarkId: String): List<String> {
     return bookmarks.value.firstOrNull { it.id == bookmarkId }?.tags.orEmpty()
   }
 
-  override suspend fun getAyahBookmarkTagIds(suraAyah: SuraAyah): List<Long> {
+  override suspend fun getAyahBookmarkTagIds(suraAyah: SuraAyah): List<String> {
     return bookmarks.value
       .firstOrNull { it.sura == suraAyah.sura && it.ayah == suraAyah.ayah }
       ?.tags
@@ -97,8 +97,8 @@ class FakeBookmarksDao : BookmarksDao {
   }
 
   override suspend fun updateBookmarkTags(
-    bookmarkIds: LongArray,
-    tagIds: Set<Long>,
+    bookmarkIds: Array<String>,
+    tagIds: Set<String>,
     deleteNonTagged: Boolean
   ): Boolean {
     val bookmarkIdSet = bookmarkIds.toSet()
@@ -123,24 +123,24 @@ class FakeBookmarksDao : BookmarksDao {
   override suspend fun updateAyahBookmarkTags(
     suraAyah: SuraAyah,
     page: Int,
-    tagIds: Set<Long>,
+    tagIds: Set<String>,
     deleteNonTagged: Boolean
   ): Boolean {
     val existing = bookmarks.value.firstOrNull { it.sura == suraAyah.sura && it.ayah == suraAyah.ayah }
     if (existing == null && tagIds.isNotEmpty()) {
-      val id = (bookmarks.value.maxOfOrNull { it.id } ?: 0L) + 1
+      val id = "bookmark-${bookmarks.value.size + 1}"
       bookmarks.update { current ->
         current + Bookmark(id, suraAyah.sura, suraAyah.ayah, page, System.currentTimeMillis() / 1000, tagIds.toList())
       }
     } else if (existing != null) {
-      updateBookmarkTags(longArrayOf(existing.id), tagIds, deleteNonTagged)
+      updateBookmarkTags(arrayOf(existing.id), tagIds, deleteNonTagged)
       return true
     }
     changesFlow.tryEmit(Unit)
     return true
   }
 
-  override suspend fun removeBookmarkFromTag(bookmark: Bookmark, tagId: Long): Boolean {
+  override suspend fun removeBookmarkFromTag(bookmark: Bookmark, tagId: String): Boolean {
     bookmarks.update { current ->
       current.map {
         if (it.id == bookmark.id) {
@@ -182,7 +182,7 @@ class FakeBookmarksDao : BookmarksDao {
       changesFlow.tryEmit(Unit)
       false
     } else {
-      val id = (bookmarks.value.maxOfOrNull { it.id } ?: 0L) + 1
+      val id = "bookmark-${bookmarks.value.size + 1}"
       bookmarks.update { current ->
         current + Bookmark(id, suraAyah.sura, suraAyah.ayah, page, System.currentTimeMillis() / 1000)
       }
