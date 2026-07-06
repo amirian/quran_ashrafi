@@ -3,6 +3,8 @@ package com.quran.data.dao
 import com.quran.data.model.SuraAyah
 import com.quran.data.model.bookmark.Bookmark
 import com.quran.data.model.bookmark.Tag
+import com.quran.data.model.collection.ReadingCollection
+import com.quran.data.model.collection.ReadingCollectionBookmarks
 import kotlinx.coroutines.flow.Flow
 
 object BookmarkSortOrder {
@@ -16,6 +18,9 @@ interface BookmarksDao {
   suspend fun bookmarks(sortOrder: Int = BookmarkSortOrder.SORT_DATE_ADDED): List<Bookmark>
   fun bookmarksFlow(sortOrder: Int = BookmarkSortOrder.SORT_DATE_ADDED): Flow<List<Bookmark>>
   fun bookmarksForPage(page: Int): Flow<List<Bookmark>>
+
+  fun collectionsWithBookmarksFlow(): Flow<List<ReadingCollectionBookmarks>>
+  suspend fun addCollection(name: String): ReadingCollection
 
   suspend fun tags(): List<Tag>
   fun tagsFlow(): Flow<List<Tag>>
@@ -40,7 +45,12 @@ interface BookmarksDao {
 
   suspend fun removeBookmarks(bookmarks: List<Bookmark>)
   suspend fun removeBookmarksForPage(page: Int)
+  suspend fun deleteAyahBookmark(suraAyah: SuraAyah): Boolean
   suspend fun replaceAyahBookmarks(bookmarks: List<Bookmark>)
   suspend fun isSuraAyahBookmarked(suraAyah: SuraAyah): Boolean
+  suspend fun replaceAyahBookmarkCollections(
+    suraAyah: SuraAyah,
+    collectionIds: Set<String>
+  ): Boolean
   suspend fun toggleAyahBookmark(suraAyah: SuraAyah, page: Int): Boolean
 }
