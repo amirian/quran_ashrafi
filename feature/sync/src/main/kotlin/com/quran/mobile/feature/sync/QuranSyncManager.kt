@@ -19,9 +19,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -62,6 +65,9 @@ class QuranSyncManager @Inject constructor(
   )
   private val tokenStore = AndroidSettingsTokenStore(context)
   private val graph: AppGraph = createGraph()
+  private val bookmarksSignInCardDismissed = MutableStateFlow(
+    syncPreferences.getBoolean(KEY_DISMISSED_BOOKMARKS_SIGN_IN_CARD, false)
+  )
 
   internal val quranDataService = graph.quranDataService
 
@@ -91,6 +97,27 @@ class QuranSyncManager @Inject constructor(
    */
   val canTriggerSync: Boolean
     get() = isConfigured && authState.value is AuthState.Success
+
+  /**
+   * Emits whether the bookmarks sign-in CTA card should be shown.
+   *
+   * The card is only useful when this build has usable sync configuration, the user is not
+   * already signed in, and they have not already dismissed it.
+   */
+  val showBookmarksSignInCardFlow: Flow<Boolean>
+    get() = combine(authState, bookmarksSignInCardDismissed) { authState, dismissed ->
+      isConfigured && authState !is AuthState.Success && !dismissed
+    }.distinctUntilChanged()
+
+  /**
+   * Persists that the user dismissed the bookmarks sign-in CTA card so it does not reappear.
+   */
+  fun dismissBookmarksSignInCard() {
+    syncPreferences.edit()
+      .putBoolean(KEY_DISMISSED_BOOKMARKS_SIGN_IN_CARD, true)
+      .apply()
+    bookmarksSignInCardDismissed.value = true
+  }
 
   /**
    * Registers the activity-backed OIDC flow factory required for Android login and pending redirect handling.
@@ -131,13 +158,16 @@ class QuranSyncManager @Inject constructor(
   /**
    * Starts the OAuth login flow and triggers an initial sync after a successful token exchange.
    *
+   * The sync settings screen is an explicit account action, so force provider-side
+   * reauthentication to avoid silently reusing a previous Quran.com browser session after logout.
+   *
    * The browser redirect continuation is owned by this app-scoped manager rather than the calling
    * UI coroutine, so Activity recreation while the browser is open does not strand the pending login.
    */
   suspend fun login() {
     runAuthAction {
       if (!isConfigured || codeAuthFlowFactory == null) return@runAuthAction
-      graph.authService.login()
+      graph.authService.loginWithReauthentication()
       graph.quranDataService.triggerSync()
     }
   }
@@ -162,6 +192,16 @@ class QuranSyncManager @Inject constructor(
       } finally {
         clearLogoutPending()
       }
+    }
+  }
+
+  /**
+   * Signs out without waiting for completion, for UI entry points that can't suspend directly
+   * (e.g. a Preference click listener).
+   */
+  fun signOut() {
+    authActionScope.launch {
+      runCatching { logout() }
     }
   }
 
@@ -253,6 +293,7 @@ class QuranSyncManager @Inject constructor(
   private companion object {
     const val SYNC_PREFERENCES_NAME = "quran_sync"
     const val KEY_LOGOUT_PENDING_PROCESS_ID = "logout_pending_process_id"
+    const val KEY_DISMISSED_BOOKMARKS_SIGN_IN_CARD = "dismissed_bookmarks_sign_in_card"
   }
 
   class AuthActivityRegistration internal constructor(
