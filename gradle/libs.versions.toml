@@ -15,7 +15,7 @@ coroutinesVersion = "1.11.0"
 crashlytics = "3.0.8"
 dnsjavaVersion = "2.1.9"
 errorprone = "5.1.1"
-metro = "1.4.4"
+metro = "1.4.5"
 errorproneCoreVersion = "2.50.0"
 googleServices = "4.5.0"
 immutableCollectionsVersion = "0.5.2"
@@ -60,7 +60,7 @@ molecule = "2.2.0"
 
 # recitations
 grpcOkhttpVersion = "1.84.0"
-googleAuthVersion = "1.52.0"
+googleAuthVersion = "1.53.0"
 googleCloudSpeechVersion = "4.92.0"
 
 # testing
