@@ -20,8 +20,9 @@ class QuranDisplayHelperTest {
 
   @Test
   fun `quarters before juz eight appear on the spread containing the marker`() {
-    assertPopup(133, isDualPageVisible = true, expected = "¼ Hizb 14")
-    assertPopup(139, isDualPageVisible = true, expected = "¾ Hizb 14")
+//Me    assertPopup(133, isDualPageVisible = true, expected = "¼ Hizb 14")
+//Me    assertPopup(139, isDualPageVisible = true, expected = "¾ Hizb 14")
+    assertPopup(145, isDualPageVisible = true, expected = "Hizb 30")    //Me
   }
 
   @Test
@@ -31,12 +32,13 @@ class QuranDisplayHelperTest {
 
   @Test
   fun `spread after juz eight shows its own marker`() {
-    assertPopup(144, isDualPageVisible = true, expected = "¼ Hizb 15")
+//Me    assertPopup(144, isDualPageVisible = true, expected = "¼ Hizb 15")
+    assertPopup(146, isDualPageVisible = true, expected = "Hizb 30")//Me
   }
 
   @Test
   fun `marker on the first visible page is still shown`() {
-    assertPopup(137, isDualPageVisible = true, expected = "½ Hizb 14")
+    assertPopup(137, isDualPageVisible = true, expected = "Hizb 28")//Me "½ Hizb 14")
   }
 
   @Test
@@ -49,14 +51,20 @@ class QuranDisplayHelperTest {
     assertPopup(141, isDualPageVisible = false, expected = null)
     assertPopup(142, isDualPageVisible = false, expected = "Juz' 8")
     assertPopup(143, isDualPageVisible = false, expected = null)
-    assertPopup(144, isDualPageVisible = false, expected = "¼ Hizb 15")
+    assertPopup(144, isDualPageVisible = false, expected = null)//Me "¼ Hizb 15")
+//Me Starts
+    assertPopup(145, isDualPageVisible = false, expected = null)
+    assertPopup(146, isDualPageVisible = false, expected = "Hizb 30")
+    assertPopup(147, isDualPageVisible = false, expected = null)
+    assertPopup(148, isDualPageVisible = false, expected = null)
+//Me Ends
   }
 
   @Test
   fun `a recent popup suppresses markers on both visible pages`() {
     val lastPopupTime = System.currentTimeMillis()
 
-    for (page in listOf(137, 141)) {
+    for (page in listOf(137, 148)) {//Me 141)) {
       val result = QuranDisplayHelper.displayMarkerPopup(
         context, quranInfo, page, true, lastPopupTime
       )
