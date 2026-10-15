@@ -8,7 +8,7 @@ ksp = "2.3.12"
 composeBomVersion = "2026.09.00"
 media3ExoplayerVersion = "1.11.1"
 okhttpBomVersion = "5.5.0"
-firebaseBomVersion = "35.0.0"
+firebaseBomVersion = "35.0.1"
 
 # dependencies
 coroutinesVersion = "1.11.0"
@@ -43,8 +43,8 @@ androidxMediaVersion = "1.8.0"
 androidxPreferencesVersion = "1.2.1"
 androidxRecyclerViewVersion = "1.4.0"
 androidxSwipeRefreshVersion = "1.2.0"
-androidxPagingVersion = "3.5.2"
-androidxPagingComposeVersion = "3.5.2"
+androidxPagingVersion = "3.5.3"
+androidxPagingComposeVersion = "3.5.3"
 androidxWorkManagerVersion = "2.12.0"
 androidxWindowManager = "1.5.1"
 
@@ -59,7 +59,7 @@ reorderableComposeVersion = "0.9.6"
 molecule = "2.2.0"
 
 # recitations
-grpcOkhttpVersion = "1.84.2"
+grpcOkhttpVersion = "1.85.0"
 googleAuthVersion = "1.54.0"
 googleCloudSpeechVersion = "4.94.0"
 
