@@ -50,10 +50,11 @@ class ShareUtil @Inject internal constructor(
     // keep the preview range aligned with the URL, which is limited to a single sura.
     val endAyah = if (end.sura == start.sura) end.ayah else quranInfo.getNumberOfAyahs(start.sura)
     val url = buildString {
+      append("https://tanzil.net/#${start.sura}:${start.ayah}")/*Me Changed from this
       append("https://quran.com/${start.sura}/${start.ayah}")
       if (endAyah != start.ayah) {
         append("-$endAyah")
-      }
+      } Me*/
     }
 
     val numberFormat = NumberFormat.getIntegerInstance(activity.resources.configuration.locales[0])
