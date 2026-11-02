@@ -7,16 +7,16 @@
   <string name="quran_sync_signed_in">Кіргенсіз</string>
   <string name="quran_sync_loading">Кіру</string>
   <string name="quran_sync_login">Кіру</string>
-  <string name="quran_sync_logout">Шығу</string>
-  <string name="quran_sync_name">Аты</string>
-  <string name="quran_sync_email">Электрондық пошта</string>
-  <string name="quran_sync_account_id">Тіркелгі идентификаторы</string>
   <string name="quran_sync_action_error">Қазір синхрондауды жаңарту мүмкін емес.</string>
   <string name="quran_sync_bookmarks_cta_title">Бетбелгілеріңізді барлық жерде синхрондаңыз</string>
   <string name="quran_sync_bookmarks_cta_subtitle">Оларға кез келген құрылғыдан, кез келген уақытта қатынасыңыз</string>
   <string name="quran_sync_bookmarks_cta_button">Quran.com арқылы кіру</string>
   <string name="quran_sync_bookmarks_cta_dismiss">Жабу</string>
   <string name="quran_sync_account_title">Есептік жазба және синхрондау</string>
+  <string name="quran_sync_activity_title">Синхрондау әрекеттері</string>
+  <string name="quran_sync_activity_footer">Осы құрылғыдағы соңғы %s синхрондау.</string>
+  <string name="quran_sync_held_show_all">Барлығын көрсету (%s)</string>
+  <string name="quran_sync_runs_see_all">Барлық әрекеттерді көру</string>
   <string name="quran_sync_status_synced">Синхрондалды</string>
   <string name="quran_sync_status_just_now">жаңа ғана</string>
   <string name="quran_sync_status_everything_else_synced">Қалғанының бәрі %s синхрондалды</string>
@@ -98,4 +98,29 @@
   <string name="quran_sync_manage_account">Есептік жазбаны басқару</string>
   <string name="quran_sync_sign_out">Шығу</string>
   <string name="quran_sync_sign_out_confirmation_title">Quran.com сайтынан шығасыз ба?</string>
+  <string name="quran_sync_sign_out_synced">Барлығы Quran.com-мен синхрондалды. Бетбелгілеріңіз, жинақтарыңыз бен жазбаларыңыз осы құрылғыдан жойылады және қайта кіргенде қалпына келтіріледі.</string>
+  <string name="quran_sync_sign_out_unknown">Quran.com-мен әлі синхрондалмаған өзгерістер шықсаңыз жоғалады.</string>
+  <string name="quran_sync_sign_out_lost">Шықсаңыз, синхрондалмағанның бәрі жоғалады.</string>
+  <string name="quran_sync_sign_out_review">Қарап шығу</string>
+  <string name="quran_sync_sign_out_held_waiting">%1$s, тағы %2$s</string>
+  <plurals name="quran_sync_sign_out_pending">
+    <item quantity="one">%1$s өзгеріс Quran.com-мен синхрондауды әлі күтуде.</item>
+    <item quantity="other">%1$s өзгеріс Quran.com-мен синхрондауды әлі күтуде.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held">
+    <item quantity="one">%1$s элементті түзетпейінше синхрондау мүмкін емес.</item>
+    <item quantity="other">%1$s элементті түзетпейінше синхрондау мүмкін емес.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held_parent">
+    <item quantity="one">%1$s элементті түзетпейінше синхрондау мүмкін емес</item>
+    <item quantity="other">%1$s элементті түзетпейінше синхрондау мүмкін емес</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_waiting">
+    <item quantity="one">%1$s элемент сол уақытқа дейін күтеді.</item>
+    <item quantity="other">%1$s элемент сол уақытқа дейін күтеді.</item>
+  </plurals>
+  <string name="quran_sync_held_edit">Өңдеу</string>
+  <string name="quran_sync_held_edit_accessibility">Өңдеу, %1$s</string>
+  <string name="quran_sync_rename">Атын өзгерту</string>
+  <string name="quran_sync_bookmark_name">%1$s бетбелгісінің атауы</string>
 </resources>

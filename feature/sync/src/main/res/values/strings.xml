@@ -8,10 +8,6 @@
   <string name="quran_sync_signed_in">Signed in</string>
   <string name="quran_sync_loading">Signing in</string>
   <string name="quran_sync_login">Log in</string>
-  <string name="quran_sync_logout">Log out</string>
-  <string name="quran_sync_name">Name</string>
-  <string name="quran_sync_email">Email</string>
-  <string name="quran_sync_account_id">Account ID</string>
   <string name="quran_sync_action_error">Unable to update sync right now.</string>
   <string name="quran_sync_bookmarks_cta_title">Sync your bookmarks everywhere</string>
   <string name="quran_sync_bookmarks_cta_subtitle">Access them on any device, any time</string>
@@ -24,6 +20,10 @@
   <string name="quran_sync_benefit_notes">Keep verse notes in sync</string>
   <string name="quran_sync_continue_caption">You\'ll continue with Quran.com</string>
   <string name="quran_sync_account_title">Account &amp; Sync</string>
+  <string name="quran_sync_activity_title">Sync activity</string>
+  <string name="quran_sync_activity_footer">The last %s syncs on this device.</string>
+  <string name="quran_sync_held_show_all">Show all %s</string>
+  <string name="quran_sync_runs_see_all">See all activity</string>
   <string name="quran_sync_status_synced">Synced</string>
   <string name="quran_sync_status_just_now">just now</string>
   <string name="quran_sync_status_everything_else_synced">Everything else synced %s</string>
@@ -105,9 +105,34 @@
   <string name="quran_sync_manage_account">Manage account</string>
   <string name="quran_sync_sign_out">Sign out</string>
   <string name="quran_sync_sign_out_confirmation_title">Sign out of Quran.com?</string>
+  <string name="quran_sync_sign_out_synced">Everything has synced to Quran.com. Your bookmarks, collections and notes will be removed from this device and come back when you sign in again.</string>
+  <string name="quran_sync_sign_out_unknown">Changes that haven\'t synced to Quran.com yet will be lost if you sign out.</string>
+  <string name="quran_sync_sign_out_lost">If you sign out, anything that hasn\'t synced will be lost.</string>
+  <string name="quran_sync_sign_out_review">Review</string>
+  <string name="quran_sync_sign_out_held_waiting">%1$s, and %2$s</string>
+  <plurals name="quran_sync_sign_out_pending">
+    <item quantity="one">%1$s change is still waiting to sync to Quran.com.</item>
+    <item quantity="other">%1$s changes are still waiting to sync to Quran.com.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held">
+    <item quantity="one">%1$s item can\'t sync until you fix it.</item>
+    <item quantity="other">%1$s items can\'t sync until you fix them.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held_parent">
+    <item quantity="one">%1$s item can\'t sync until you fix it</item>
+    <item quantity="other">%1$s items can\'t sync until you fix them</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_waiting">
+    <item quantity="one">%1$s more can\'t sync until then.</item>
+    <item quantity="other">%1$s more can\'t sync until then.</item>
+  </plurals>
   <string name="quran_sync_separator" translatable="false">" · "</string>
   <string name="quran_sync_oauth_client_id" translatable="false"></string>
   <string name="quran_sync_oauth_issuer_url" translatable="false"></string>
   <string name="quran_sync_oauth_redirect_scheme" translatable="false"></string>
   <string name="quran_sync_environment" translatable="false"></string>
+  <string name="quran_sync_held_edit">Edit</string>
+  <string name="quran_sync_held_edit_accessibility">Edit, %1$s</string>
+  <string name="quran_sync_rename">Rename</string>
+  <string name="quran_sync_bookmark_name">%1$s bookmark name</string>
 </resources>

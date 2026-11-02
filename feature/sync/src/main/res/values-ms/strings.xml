@@ -7,16 +7,16 @@
   <string name="quran_sync_signed_in">Log masuk</string>
   <string name="quran_sync_loading">Sedang log masuk</string>
   <string name="quran_sync_login">Log masuk</string>
-  <string name="quran_sync_logout">Log keluar</string>
-  <string name="quran_sync_name">Nama</string>
-  <string name="quran_sync_email">E-mel</string>
-  <string name="quran_sync_account_id">ID Akaun</string>
   <string name="quran_sync_action_error">Tidak dapat mengemas kini penyegerakan buat masa ini.</string>
   <string name="quran_sync_bookmarks_cta_title">Segerakkan penanda buku anda di mana-mana</string>
   <string name="quran_sync_bookmarks_cta_subtitle">Akses daripada mana-mana peranti, pada bila-bila masa</string>
   <string name="quran_sync_bookmarks_cta_button">Log masuk dengan Quran.com</string>
   <string name="quran_sync_bookmarks_cta_dismiss">Ketepikan</string>
   <string name="quran_sync_account_title">Akaun &amp; Penyegerakan</string>
+  <string name="quran_sync_activity_title">Aktiviti penyegerakan</string>
+  <string name="quran_sync_activity_footer">%s penyegerakan terakhir pada peranti ini.</string>
+  <string name="quran_sync_held_show_all">Tunjukkan semua %s</string>
+  <string name="quran_sync_runs_see_all">Lihat semua aktiviti</string>
   <string name="quran_sync_status_synced">Disegerakkan</string>
   <string name="quran_sync_status_just_now">sebentar tadi</string>
   <string name="quran_sync_status_everything_else_synced">Yang lain disegerakkan %s</string>
@@ -94,4 +94,25 @@
   <string name="quran_sync_manage_account">Urus akaun</string>
   <string name="quran_sync_sign_out">Log keluar</string>
   <string name="quran_sync_sign_out_confirmation_title">Log keluar daripada Quran.com?</string>
+  <string name="quran_sync_sign_out_synced">Semuanya telah disegerakkan dengan Quran.com. Penanda halaman, koleksi dan nota anda akan dialih keluar daripada peranti ini dan dipulihkan apabila anda log masuk semula.</string>
+  <string name="quran_sync_sign_out_unknown">Perubahan yang belum disegerakkan dengan Quran.com akan hilang jika anda log keluar.</string>
+  <string name="quran_sync_sign_out_lost">Jika anda log keluar, semua yang belum disegerakkan akan hilang.</string>
+  <string name="quran_sync_sign_out_review">Semak</string>
+  <string name="quran_sync_sign_out_held_waiting">%1$s, dan %2$s</string>
+  <plurals name="quran_sync_sign_out_pending">
+    <item quantity="other">%1$s perubahan masih menunggu untuk disegerakkan dengan Quran.com.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held">
+    <item quantity="other">%1$s item tidak dapat disegerakkan sehingga anda membetulkannya.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held_parent">
+    <item quantity="other">%1$s item tidak dapat disegerakkan sehingga anda membetulkannya</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_waiting">
+    <item quantity="other">%1$s lagi perlu menunggu sehingga itu.</item>
+  </plurals>
+  <string name="quran_sync_held_edit">Edit</string>
+  <string name="quran_sync_held_edit_accessibility">Edit, %1$s</string>
+  <string name="quran_sync_rename">Namakan semula</string>
+  <string name="quran_sync_bookmark_name">Nama penanda %1$s</string>
 </resources>

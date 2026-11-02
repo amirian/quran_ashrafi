@@ -7,16 +7,16 @@
   <string name="quran_sync_signed_in">Autenticado</string>
   <string name="quran_sync_loading">Iniciando sessão</string>
   <string name="quran_sync_login">Iniciar sessão</string>
-  <string name="quran_sync_logout">Terminar sessão</string>
-  <string name="quran_sync_name">Nome</string>
-  <string name="quran_sync_email">E-mail</string>
-  <string name="quran_sync_account_id">ID da conta</string>
   <string name="quran_sync_action_error">Não é possível atualizar a sincronização agora.</string>
   <string name="quran_sync_bookmarks_cta_title">Sincronize os seus marcadores em todo o lado</string>
   <string name="quran_sync_bookmarks_cta_subtitle">Aceda a eles a partir de qualquer dispositivo, a qualquer momento</string>
   <string name="quran_sync_bookmarks_cta_button">Iniciar sessão com Quran.com</string>
   <string name="quran_sync_bookmarks_cta_dismiss">Dispensar</string>
   <string name="quran_sync_account_title">Conta e sincronização</string>
+  <string name="quran_sync_activity_title">Atividade de sincronização</string>
+  <string name="quran_sync_activity_footer">As últimas %s sincronizações neste dispositivo.</string>
+  <string name="quran_sync_held_show_all">Mostrar todos (%s)</string>
+  <string name="quran_sync_runs_see_all">Ver toda a atividade</string>
   <string name="quran_sync_status_synced">Sincronizado</string>
   <string name="quran_sync_status_just_now">agora mesmo</string>
   <string name="quran_sync_status_everything_else_synced">Todo o resto sincronizado %s</string>
@@ -102,4 +102,29 @@
   <string name="quran_sync_manage_account">Gerenciar conta</string>
   <string name="quran_sync_sign_out">Sair</string>
   <string name="quran_sync_sign_out_confirmation_title">Sair do Quran.com?</string>
+  <string name="quran_sync_sign_out_synced">Tudo está sincronizado com o Quran.com. Seus marcadores, coleções e notas serão removidos deste dispositivo e restaurados quando você entrar novamente.</string>
+  <string name="quran_sync_sign_out_unknown">As alterações que ainda não foram sincronizadas com o Quran.com serão perdidas se você sair.</string>
+  <string name="quran_sync_sign_out_lost">Se você sair, tudo o que não foi sincronizado será perdido.</string>
+  <string name="quran_sync_sign_out_review">Revisar</string>
+  <string name="quran_sync_sign_out_held_waiting">%1$s, e mais %2$s</string>
+  <plurals name="quran_sync_sign_out_pending">
+    <item quantity="one">%1$s alteração ainda está aguardando sincronização com o Quran.com.</item>
+    <item quantity="other">%1$s alterações ainda estão aguardando sincronização com o Quran.com.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held">
+    <item quantity="one">%1$s item não pode ser sincronizado até você corrigi-lo.</item>
+    <item quantity="other">%1$s itens não podem ser sincronizados até você corrigi-los.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held_parent">
+    <item quantity="one">%1$s item não pode ser sincronizado até você corrigi-lo</item>
+    <item quantity="other">%1$s itens não podem ser sincronizados até você corrigi-los</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_waiting">
+    <item quantity="one">%1$s terá que esperar até lá.</item>
+    <item quantity="other">%1$s terão que esperar até lá.</item>
+  </plurals>
+  <string name="quran_sync_held_edit">Editar</string>
+  <string name="quran_sync_held_edit_accessibility">Editar, %1$s</string>
+  <string name="quran_sync_rename">Renomear</string>
+  <string name="quran_sync_bookmark_name">Nome do marcador %1$s</string>
 </resources>

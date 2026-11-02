@@ -7,16 +7,16 @@
   <string name="quran_sync_signed_in">Đã đăng nhập</string>
   <string name="quran_sync_loading">Đang đăng nhập</string>
   <string name="quran_sync_login">Đăng nhập</string>
-  <string name="quran_sync_logout">Đăng xuất</string>
-  <string name="quran_sync_name">Tên</string>
-  <string name="quran_sync_email">Email</string>
-  <string name="quran_sync_account_id">ID tài khoản</string>
   <string name="quran_sync_action_error">Hiện không thể cập nhật đồng bộ hóa.</string>
   <string name="quran_sync_bookmarks_cta_title">Đồng bộ hóa dấu trang của bạn ở mọi nơi</string>
   <string name="quran_sync_bookmarks_cta_subtitle">Truy cập chúng từ bất kỳ thiết bị nào, bất kỳ lúc nào</string>
   <string name="quran_sync_bookmarks_cta_button">Đăng nhập bằng Quran.com</string>
   <string name="quran_sync_bookmarks_cta_dismiss">Bỏ qua</string>
   <string name="quran_sync_account_title">Tài khoản và đồng bộ</string>
+  <string name="quran_sync_activity_title">Hoạt động đồng bộ</string>
+  <string name="quran_sync_activity_footer">%s lần đồng bộ gần nhất trên thiết bị này.</string>
+  <string name="quran_sync_held_show_all">Hiện tất cả %s</string>
+  <string name="quran_sync_runs_see_all">Xem tất cả hoạt động</string>
   <string name="quran_sync_status_synced">Đã đồng bộ</string>
   <string name="quran_sync_status_just_now">vừa xong</string>
   <string name="quran_sync_status_everything_else_synced">Mọi thứ khác đã đồng bộ %s</string>
@@ -94,4 +94,25 @@
   <string name="quran_sync_manage_account">Quản lý tài khoản</string>
   <string name="quran_sync_sign_out">Đăng xuất</string>
   <string name="quran_sync_sign_out_confirmation_title">Đăng xuất khỏi Quran.com?</string>
+  <string name="quran_sync_sign_out_synced">Mọi thứ đã được đồng bộ với Quran.com. Dấu trang, bộ sưu tập và ghi chú của bạn sẽ bị xóa khỏi thiết bị này và được khôi phục khi bạn đăng nhập lại.</string>
+  <string name="quran_sync_sign_out_unknown">Những thay đổi chưa được đồng bộ với Quran.com sẽ bị mất nếu bạn đăng xuất.</string>
+  <string name="quran_sync_sign_out_lost">Nếu bạn đăng xuất, mọi thứ chưa được đồng bộ sẽ bị mất.</string>
+  <string name="quran_sync_sign_out_review">Xem lại</string>
+  <string name="quran_sync_sign_out_held_waiting">%1$s, và %2$s</string>
+  <plurals name="quran_sync_sign_out_pending">
+    <item quantity="other">%1$s thay đổi vẫn đang chờ đồng bộ với Quran.com.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held">
+    <item quantity="other">%1$s mục không thể đồng bộ cho đến khi bạn sửa.</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_held_parent">
+    <item quantity="other">%1$s mục không thể đồng bộ cho đến khi bạn sửa</item>
+  </plurals>
+  <plurals name="quran_sync_sign_out_waiting">
+    <item quantity="other">%1$s mục khác phải chờ đến lúc đó.</item>
+  </plurals>
+  <string name="quran_sync_held_edit">Sửa</string>
+  <string name="quran_sync_held_edit_accessibility">Sửa, %1$s</string>
+  <string name="quran_sync_rename">Đổi tên</string>
+  <string name="quran_sync_bookmark_name">Tên dấu trang %1$s</string>
 </resources>
